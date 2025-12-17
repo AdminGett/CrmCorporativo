@@ -1,0 +1,7 @@
+{
+  "name": "CrmCorporativo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
