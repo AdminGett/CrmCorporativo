@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { userRegisterAltaComponent } from './user-register-alta/user-register-alta.component';
 
 const routes: Routes = [
   {
@@ -13,9 +14,14 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {path: 'Home',
+  {
+    path: 'Home',
     component: HomeComponent
-   }
+  },
+  {
+    path: 'AltaUsuario',
+    component: userRegisterAltaComponent
+  }
 ];
 
 @NgModule({

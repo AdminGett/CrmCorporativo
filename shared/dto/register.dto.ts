@@ -1,4 +1,5 @@
 export interface Register {
+    userId: number;
     passwordEncrypt: string;
     nombre: string;
     paterno: string;
