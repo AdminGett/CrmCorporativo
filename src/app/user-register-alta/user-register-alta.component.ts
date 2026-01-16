@@ -10,7 +10,7 @@ import { RegisterService } from '../../services/register.service';
   selector: 'app-register',
   templateUrl: './user-register-alta.component.html',
   standalone: false,
-  styleUrls: ['./user-register-alta.component.css']
+  styleUrls: ['./user-register-alta.component.scss']
 })
 export class userRegisterAltaComponent implements OnInit {
     confirmPassword: string = '';
