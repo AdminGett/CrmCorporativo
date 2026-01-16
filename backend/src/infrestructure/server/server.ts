@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { Application } from 'express';
-import routesUser from '../../interfaces/routes/login.routes';
+import loginRoutesUser from '../../interfaces/routes/login.routes';
+import registerRoutesUser from '../../interfaces/routes/register.routes';
 import User from '../models/login';
 
 dotenv.config();
@@ -31,7 +32,8 @@ class Server {
         this.app.get('/api/status', (req, res) => {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
         });
-        this.app.use('/api/users', routesUser);
+        this.app.use('/api/users', loginRoutesUser);
+        this.app.use('/api/users', registerRoutesUser);
     }
 
     private middlewares() {

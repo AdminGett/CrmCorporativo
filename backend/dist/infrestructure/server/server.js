@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const login_routes_1 = __importDefault(require("../../interfaces/routes/login.routes"));
+const register_routes_1 = __importDefault(require("../../interfaces/routes/register.routes"));
 const login_1 = __importDefault(require("../models/login"));
 dotenv_1.default.config();
 class Server {
@@ -29,6 +30,7 @@ class Server {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
         });
         this.app.use('/api/users', login_routes_1.default);
+        this.app.use('/api/users', register_routes_1.default);
     }
     middlewares() {
         this.app.use(express_1.default.json());

@@ -9,31 +9,36 @@ const login_1 = __importDefault(require("../../infrestructure/models/login"));
 // import bcrypt from 'bcryptjs';  para cuadno la contrasena sea encriptada
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const console_1 = require("console");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const loginUser = async (req, res) => {
     var _a;
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ msg: "Datos inválidos", errors: errors.array() });
     }
-    const { id, contrasena } = req.body;
-    console.log("Datos del body:", { id, contrasena });
+    const { id, passwordEncrypt } = req.body;
+    console.log("Datos del body:", { id, passwordEncrypt });
     try {
         const user = await login_1.default.findOne({ where: { id: id } });
-        console.log("Datos db:", user);
         if (!user) {
             console.log("Usuario no encontrado", id);
             return res.status(400).json({
                 msg: `Ha ocurrido un problema, vuelve a intentar`
             });
         }
-        if (contrasena !== user.contrasena) {
-            return res.status(400).json({ msg: "Ha ocurrido un error" });
+        // if(passwordEncrypt !== user.passwordEncrypt){
+        //     return res.status(400).json({msg:"Ha ocurrido un error"});
+        // }
+        const passwordValid = await bcryptjs_1.default.compare(passwordEncrypt, user.passwordEncrypt);
+        if (!passwordValid) {
+            res.status(400).json({
+                msg: "Ha ocurrido un problema, vuelve a intentar"
+            });
+            return;
         }
         const token = jsonwebtoken_1.default.sign({
             id: user.id,
             role: user.tipoUsuario,
-            username: user.nombreUsuario,
-            email: user.correo
         }, (_a = process.env['SECRET_KEY']) !== null && _a !== void 0 ? _a : 'pacoeltaco', {
             expiresIn: '1h'
         });

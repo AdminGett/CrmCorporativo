@@ -4,38 +4,28 @@ import sequelize from '../../config/connection';
 //  Dtos que se usaran 
 export interface IUser {
   id: number;
-  nombre: string;
-  paterno: string;
-  materno: string;
   tipoUsuario: string;
-  nombreUsuario: string;
-  correo: string;
   activo: boolean;
   ultimaActividad?: Date | null; // Puede ser null al inicio
-  fechaRegistro: Date;
+  intentosLogueo: number;
   bloqueado: boolean;
 }
 
 //interfaz pra poder ingresar
 export interface IUserAttributes extends IUser {
-  contrasena: string; 
+  passwordEncrypt: string; 
 }
 
 // Para la creación, el ID y las fechas son opcionales porque los crea la BD
-export type UserCreationAttributes = Optional<IUserAttributes, | 'fechaRegistro' | 'ultimaActividad'>;
+export type UserCreationAttributes = Optional<IUserAttributes,'ultimaActividad'>;
 
 //  IUserAttributes da todo lo que debe tener la BD
 export class UserInstance extends Model<IUserAttributes, UserCreationAttributes> implements IUserAttributes {
   public id!: number;
-  public nombre!: string;
-  public paterno!: string;
-  public materno!: string;
-  public correo!: string;
-  public contrasena!: string; 
+  public passwordEncrypt!: string; 
   public tipoUsuario!: string;
-  public nombreUsuario!: string;
   public activo!: boolean;
-  public fechaRegistro!: Date;
+  public intentosLogueo!: number;
   public ultimaActividad!: Date | null;
   public bloqueado!: boolean;
 }
@@ -47,38 +37,17 @@ const User = sequelize.define<UserInstance>('User', {
     primaryKey: true,
     autoIncrement: true
   },
-  nombre: { 
-    type: DataTypes.STRING, 
-    allowNull: false
-  },
-  paterno: { 
-    type: DataTypes.STRING,
-    allowNull: false 
-  },
-  materno: { 
-    type: DataTypes.STRING, 
-    allowNull: false 
-  },
-  correo: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: { isEmail: true }
-  },
-  contrasena: { 
+  passwordEncrypt: { 
     type: DataTypes.STRING,
     allowNull: false
   },
   tipoUsuario: { 
-    type: DataTypes.STRING,
-    allowNull: false },
-  nombreUsuario: { 
-    type: DataTypes.STRING, 
+    type: DataTypes.INTEGER,
     allowNull: false 
-},
-  fechaRegistro: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+  },
+  intentosLogueo: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
     allowNull: false
   },
   ultimaActividad: {
@@ -87,17 +56,18 @@ const User = sequelize.define<UserInstance>('User', {
     allowNull: true
   },
   activo: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.INTEGER,
     defaultValue: true,
     allowNull: false
   },
   bloqueado: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.INTEGER,
     defaultValue: false,
     allowNull: false
   }
+  
 }, {
-  tableName: 'usuarios', 
+  tableName: 'loginUsuarios', 
   timestamps: false
 });
 

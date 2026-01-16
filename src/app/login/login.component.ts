@@ -25,7 +25,7 @@ interface TokenPayload {
 export class LoginComponent implements OnInit {
   // Definición de variables
   id: string = '';
-  contrasena: string = '';
+  passwordEncrypt: string = '';
   loading: boolean = false;
   userInfo: any = null;
 
@@ -77,14 +77,14 @@ export class LoginComponent implements OnInit {
 
   // Método de login
   login() {
-    if (this.id === '' || this.contrasena === '') {
+    if (this.id === '' || this.passwordEncrypt === '') {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
 
     const user: Login = {
       id: this.id,
-      contrasena: this.contrasena,
+      passwordEncrypt: this.passwordEncrypt,
     };
 
     this.loading = true;

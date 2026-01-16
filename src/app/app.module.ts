@@ -14,10 +14,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
+import { userRegisterAltaComponent } from './user-register-alta/user-register-alta.component';
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent, userRegisterAltaComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ToastrModule.forRoot({
         positionClass: 'toast-bottom-right',
         timeOut: 3000,
