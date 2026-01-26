@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 import User, { IUserAttributes } from '../../infrestructure/models/login';
-// import bcrypt from 'bcryptjs';  para cuadno la contrasena sea encriptada
 import jwt from 'jsonwebtoken';
 import { error } from 'console';
 import bcrypt from 'bcryptjs';
@@ -17,7 +16,7 @@ export const loginUser = async (req: Request, res: Response) => {
     console.log("Datos del body:", { id, passwordEncrypt });
 
     try {
-        const user: any = await User.findOne({ where: { id: id } }) as IUserAttributes | null;
+        const user: any = await User.findOne({ where: { id: id, activo: 1} }) as IUserAttributes | null;
         if (!user) {
             console.log("Usuario no encontrado",id);
             return res.status(400).json({
@@ -39,8 +38,8 @@ export const loginUser = async (req: Request, res: Response) => {
 
         const token = jwt.sign(
             {
-                id: user.id,
-                role: user.tipoUsuario,
+                userId: user.id,
+                role: Number(user.tipoUsuario),
             },
             process.env['SECRET_KEY'] ?? 'pacoeltaco',
             {

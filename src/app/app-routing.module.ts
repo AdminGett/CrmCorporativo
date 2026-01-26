@@ -3,6 +3,9 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { userRegisterAltaComponent } from './user-register-alta/user-register-alta.component';
+import { deleteUsersComponent } from './user-register-baja/user-register-baja.component';
+import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
+import { UpdatePanelComponent } from './update-panel/update-panel.component';
 
 const routes: Routes = [
   {
@@ -21,6 +24,18 @@ const routes: Routes = [
   {
     path: 'AltaUsuario',
     component: userRegisterAltaComponent
+  },
+  {
+    path: 'BajaUsuario',
+    component: deleteUsersComponent
+  },
+  {
+    path: 'ModificarUsuario',
+    component: updateUsersComponent
+  },
+  {
+    path: 'users/update/getUser/:userId',
+    component: UpdatePanelComponent
   }
 ];
 

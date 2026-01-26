@@ -66,6 +66,11 @@ const User = connection_1.default.define('User', {
     tipoUsuario: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
+    },
+    activo: {
+        type: sequelize_1.DataTypes.INTEGER,
+        defaultValue: 1,
+        allowNull: false
     }
 }, {
     tableName: 'userProfile',

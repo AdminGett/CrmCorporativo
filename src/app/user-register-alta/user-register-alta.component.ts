@@ -13,29 +13,32 @@ import { RegisterService } from '../../services/register.service';
   styleUrls: ['./user-register-alta.component.scss']
 })
 export class userRegisterAltaComponent implements OnInit {
-    confirmPassword: string = '';
-    passwordEncrypt: string = '';
-    nombre: string= '';
-    paterno: string= '';
-    materno: string= '';
-    fechaNacimiento: Date= new Date('00-00-0000');
-    domicilio: string= '';
-    nss: string= '';
-    codigoPostal: string= '';
-    estado: string= '';
-    pais: string= '';
-    fechaRegistro: Date = new Date('00-00-0000');
-    tipoUsuario: number=0;
-    loading: boolean = false;
+  confirmPassword: string = '';
+  passwordEncrypt: string = '';
+  nombre: string = '';
+  paterno: string = '';
+  materno: string = '';
+  fechaNacimiento: Date = new Date('2000-01-01');
+  domicilio: string = '';
+  nss: string = '';
+  codigoPostal: string = '';
+  estado: string = '';
+  pais: string = '';
+  fechaRegistro: Date = new Date();
+  tipoUsuario: number = 0;
+  activo: number = 1;
+
+  adminOption: number = 3;
+  loading: boolean = false;
 
   constructor(
     private readonly toastr: ToastrService,
     private readonly _userService: RegisterService,
     private readonly router: Router,
     private readonly _errorService: ErrorService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   togglePassword(inputId: string, toggleId: string) {
     const passwordInput = document.getElementById(inputId) as HTMLInputElement | null;
@@ -61,6 +64,11 @@ export class userRegisterAltaComponent implements OnInit {
   }
 
   async addUser() {
+  if (this.passwordEncrypt !== this.confirmPassword) {
+    this.toastr.error('Las contraseñas no coinciden', 'Error');
+    return;
+  }
+
     if (
       this.nombre.trim() === '' ||
       this.paterno.trim() === '' ||
@@ -73,8 +81,10 @@ export class userRegisterAltaComponent implements OnInit {
       this.pais.trim() === '' ||
       this.confirmPassword.trim() === '' ||
       this.fechaRegistro === null ||
-      this.tipoUsuario === 0
+      this.tipoUsuario === 0 ||
+      this.activo === 0
     ) {
+      console.log('');
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return;
     }
@@ -84,7 +94,11 @@ export class userRegisterAltaComponent implements OnInit {
       return;
     }
 
-    
+
+    if (this.adminOption === 1) {
+      this.tipoUsuario = 1;
+    } 
+
     this.loading = true;
 
     try {
@@ -101,7 +115,8 @@ export class userRegisterAltaComponent implements OnInit {
         estado: this.estado,
         pais: this.pais,
         fechaRegistro: this.fechaRegistro,
-        tipoUsuario: this.tipoUsuario
+        tipoUsuario: this.tipoUsuario,
+        activo: 1
       };
 
       // Llamar al servicio pasando el archivo por separado
@@ -120,5 +135,20 @@ export class userRegisterAltaComponent implements OnInit {
       this.toastr.error('Error al procesar el registro', 'Error');
       console.error('Error:', error);
     }
+  }
+
+  public clearInputs(): void {
+    const textInputs = document.querySelectorAll('input[type="text"]');
+    textInputs.forEach((input: any) => {
+      input.value = '';
+    });
+    const passwordInputs = document.querySelectorAll('input[type="password"]');
+    passwordInputs.forEach((input: any) => {
+      input.value = '';
+    });
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    dateInputs.forEach((input: any) => {
+      input.value = '';
+    });
   }
 }

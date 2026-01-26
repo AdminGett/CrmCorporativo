@@ -16,9 +16,10 @@ export interface IUserRegister {
     pais: string;
     fechaRegistro?: Date;
     tipoUsuario: number;
+    activo?: number;
 }
 
-export type UserCreationAttributes = Optional<IUserRegister, 'userId' | 'fechaRegistro'>;
+export type UserCreationAttributes = Optional<IUserRegister, 'userId' | 'fechaRegistro' | 'activo'>;
 
 
 //  IUserAttributes da todo lo que debe tener la BD
@@ -36,6 +37,7 @@ export class UserInstance extends Model<IUserRegister, UserCreationAttributes> i
     public pais!: string;
     public fechaRegistro!: Date;
     public tipoUsuario!: number;
+    public activo!: number;
 }
 
 // Aqui se "copia" la base de datos de SQL para hacer consultas
@@ -93,6 +95,11 @@ const User = sequelize.define<UserInstance>('User', {
     },
     tipoUsuario: {
         type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    activo:{
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
         allowNull: false
     }
 }, {

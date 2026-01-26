@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { updateUsersComponent } from './user-register-modificar.component';
+import { UpdatePanelComponent } from './update-panel.component';
 
-describe('UserRegisterModificarComponent', () => {
-  let component: updateUsersComponent;
-  let fixture: ComponentFixture<updateUsersComponent>;
+describe('UpdatePanelComponent', () => {
+  let component: UpdatePanelComponent;
+  let fixture: ComponentFixture<UpdatePanelComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ updateUsersComponent ],
+      declarations: [ UpdatePanelComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(updateUsersComponent);
+    fixture = TestBed.createComponent(UpdatePanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -34,7 +34,7 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";
 
 // body{
 //     background-image: url(../src/assets/backgroud_login.png);
@@ -53,6 +53,17 @@
 .text-beige {
     color: #fffefe;
 }
+
+html,
+body {
+    height: 100%;
+    overflow: hidden; /* Ionic lo controla */
+}
+
+ion-content {
+    --overflow: auto;
+}
+
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -154,16 +165,17 @@ body {
     font-size: 0.95rem;
     transition: all 0.2s ease-in-out;
 
-    &:focus{
+    &:focus {
         outline: none;
         border-color: #6366f1;
-        box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     }
 
-    &::placeholder{
-        color:#9ca3fa;
+    &::placeholder {
+        color: #9ca3fa;
     }
-    &:disabled{
+
+    &:disabled {
         background-color: #f3f4f6;
         cursor: not-allowed;
     }

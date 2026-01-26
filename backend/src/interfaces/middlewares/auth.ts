@@ -1,31 +1,67 @@
 // src/middlewares/auth.ts
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export interface AuthRequest extends Request {
-  user?:JwtPayload | any; 
+export interface TokenPayload {
+  userId: number;
+  role: number;
 }
 
-export const verifyToken = (req: AuthRequest, res: Response, next: NextFunction) => {
-  const token = req.header("Authorization")?.split(" ")[1];
+export interface AuthRequest extends Request {
+  user?:TokenPayload; 
+}
 
-  if (!token) {
-    res.status(401).json({ message: "Acceso denegado." });
+export const verifyToken = (
+  req: AuthRequest, 
+  res: Response, 
+  next: NextFunction
+) => {
+  const authHeader = req.header("Authorization");
+
+  console.log("AUTH HEADER 👉", authHeader);
+  if(!authHeader) {
+    res.status(401).json({ message: "Ha ocurrido un errorsote" });
     return;
   }
 
+  const token = authHeader.split(" ")[1];
+
+  console.log("TOKEN 👉", token);
+
+  if (!token) {
+    return res.status(401).json({ message: "Acceso denegado." });
+  }
+
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY || 'ulisesfloresmtz');
+    const decoded = jwt.verify(
+      token, 
+      process.env.SECRET_KEY || 'pacoeltaco'
+    );
+
+    console.log("DECODED TOKEN 👉", decoded);
+
+
+    if(!isTokenPayload(decoded)) {
+      return res.status(401).json({ message: "Acceso denegado." });
+    }
+
     req.user = decoded;
     next();
   } catch (error) {
-     res.status(401).json({ message: "Ocurrio un error" });
-     return;
+     return res.status(401).json({ message: "Ocurrio un errorson" });
   }
 };
 
+
+function isTokenPayload(
+  decoded: string | jwt.JwtPayload): 
+  decoded is TokenPayload {
+  return (typeof decoded === "object" && 
+         decoded !== null &&
+         typeof (decoded as any).userId === "number" &&
+         typeof (decoded as any).role === "number");
+}
 

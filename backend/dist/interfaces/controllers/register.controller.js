@@ -13,7 +13,7 @@ const registerUser = async (req, res) => {
         res.status(400).json({ errors: errors.array() });
         return;
     }
-    const { nombre, passwordEncrypt, paterno, materno, fechaNacimiento, domicilio, nss, codigoPostal, estado, pais, fechaRegistro, tipoUsuario } = req.body;
+    const { nombre, passwordEncrypt, paterno, materno, fechaNacimiento, domicilio, nss, codigoPostal, estado, pais, fechaRegistro, tipoUsuario, activo } = req.body;
     // Validar campos obligatorios
     if (!nombre ||
         !passwordEncrypt ||
@@ -26,7 +26,8 @@ const registerUser = async (req, res) => {
         !estado ||
         !pais ||
         !fechaRegistro ||
-        !tipoUsuario) {
+        !tipoUsuario ||
+        !activo) {
         res.status(400).json({ msg: "Todos los campos son obligatorios" });
         return;
     }
@@ -45,7 +46,8 @@ const registerUser = async (req, res) => {
             codigoPostal: codigoPostal,
             estado: estado,
             pais: pais,
-            tipoUsuario: tipoUsuario
+            tipoUsuario: tipoUsuario,
+            activo: 1
         });
         res.status(201).json({
             msg: `Usuario ${nombre} creado exitosamente`,

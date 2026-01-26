@@ -8,20 +8,34 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const verifyToken = (req, res, next) => {
-    var _a;
-    const token = (_a = req.header("Authorization")) === null || _a === void 0 ? void 0 : _a.split(" ")[1];
-    if (!token) {
-        res.status(401).json({ message: "Acceso denegado." });
+    const authHeader = req.header("Authorization");
+    console.log("AUTH HEADER 👉", authHeader);
+    if (!authHeader) {
+        res.status(401).json({ message: "Ha ocurrido un errorsote" });
         return;
     }
+    const token = authHeader.split(" ")[1];
+    console.log("TOKEN 👉", token);
+    if (!token) {
+        return res.status(401).json({ message: "Acceso denegado." });
+    }
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY || 'ulisesfloresmtz');
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY || 'pacoeltaco');
+        console.log("DECODED TOKEN 👉", decoded);
+        if (!isTokenPayload(decoded)) {
+            return res.status(401).json({ message: "Acceso denegado." });
+        }
         req.user = decoded;
         next();
     }
     catch (error) {
-        res.status(401).json({ message: "Ocurrio un error" });
-        return;
+        return res.status(401).json({ message: "Ocurrio un errorson" });
     }
 };
 exports.verifyToken = verifyToken;
+function isTokenPayload(decoded) {
+    return (typeof decoded === "object" &&
+        decoded !== null &&
+        typeof decoded.userId === "number" &&
+        typeof decoded.role === "number");
+}

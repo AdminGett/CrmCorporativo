@@ -11,7 +11,7 @@ export class LoginService {
   private readonly myApiUrl: string;
   constructor(private readonly http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'users/login';
+    this.myApiUrl = 'auth/login';
   }
 
   login(user: Login): Observable<{ token: string }> {
