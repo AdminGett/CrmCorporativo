@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const delete_controller_1 = require("../controllers/delete.controller");
+const adminAuth_1 = require("../middlewares/adminAuth");
+const router = (0, express_1.Router)();
+router.delete('/:userId', adminAuth_1.verifyAdmin, delete_controller_1.deleteUser);
+router.get('/', adminAuth_1.verifyAdmin, delete_controller_1.getAllUsers);
+router.get('/search', adminAuth_1.verifyAdmin, delete_controller_1.getUserByName);
+exports.default = router;

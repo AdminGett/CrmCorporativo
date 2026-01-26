@@ -3,9 +3,9 @@ import { jwtDecode } from 'jwt-decode';
 
 interface TokenPayload {
   id: number;
-  role: string;
   username: string;
   email: string;
+  role: string;
   exp: number;
 }
 

@@ -1,5 +1,5 @@
 export interface Register {
-    userId: number;
+    userId?: number;
     passwordEncrypt: string;
     nombre: string;
     paterno: string;
@@ -12,4 +12,5 @@ export interface Register {
     pais: string;
     fechaRegistro: Date;
     tipoUsuario: number;
+    activo?: number;
 }

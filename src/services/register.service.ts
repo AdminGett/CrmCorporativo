@@ -13,29 +13,25 @@ export class RegisterService {
 
   constructor(private readonly http: HttpClient) {
     this.myAppUrl = environment.endpoint;
-    this.myApiUrl = 'users/register'
+    this.myApiUrl = 'auth/register'
   }
 
-  signIn(user: Register, avatarFile?: File): Observable<any> {
-    const formData = new FormData();
-    // Agregar todos los campos del usuario
-    formData.append('nombre', user.nombre);
-    formData.append('paterno', user.paterno);
-    formData.append('materno', user.materno);
-    formData.append('fechaNacimiento', user.fechaNacimiento.toISOString());
-    formData.append('domicilio', user.domicilio);
-    formData.append('nss', user.nss);
-    formData.append('codigoPostal', user.codigoPostal);
-    formData.append('estado', user.estado);
-    formData.append('pais', user.pais);
-    formData.append('fechaRegistro', user.fechaRegistro.toISOString());
-    formData.append('tipoUsuario', user.tipoUsuario.toString());
-    
-    // Agregar el archivo si existe
-    if (avatarFile) {
-      formData.append('avatar', avatarFile);
+  signIn(user: Register): Observable<any> {
+    const body = {
+      nombre: user.nombre,
+      paterno: user.paterno,
+      materno: user.materno,
+      fechaNacimiento: new Date(user.fechaNacimiento).toISOString(),
+      domicilio: user.domicilio,
+      nss: user.nss,
+      codigoPostal: user.codigoPostal,
+      estado: user.estado,
+      pais: user.pais,
+      fechaRegistro: new Date(user.fechaRegistro).toISOString(),
+      tipoUsuario: user.tipoUsuario,
+      passwordEncrypt: user.passwordEncrypt,
+      activo: user.activo
     }
-
-    return this.http.post(`${this.myAppUrl}${this.myApiUrl}`, formData);
+    return this.http.post(`${this.myAppUrl}${this.myApiUrl}`, body);
   }
 }

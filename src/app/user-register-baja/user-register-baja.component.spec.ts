@@ -1,19 +1,18 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { UserRegisterBajaComponent } from './user-register-baja.component';
+import { deleteUsersComponent } from './user-register-baja.component';
 
-describe('UserRegisterBajaComponent', () => {
-  let component: UserRegisterBajaComponent;
-  let fixture: ComponentFixture<UserRegisterBajaComponent>;
-
+describe('deleteUsersComponent', () => {
+  let component: deleteUsersComponent;
+  let fixture: ComponentFixture<deleteUsersComponent>;
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserRegisterBajaComponent ],
+      declarations: [ deleteUsersComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserRegisterBajaComponent);
+    fixture = TestBed.createComponent(deleteUsersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

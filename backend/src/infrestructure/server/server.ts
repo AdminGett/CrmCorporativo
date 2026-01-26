@@ -4,7 +4,9 @@ import dotenv from 'dotenv';
 import { Application } from 'express';
 import loginRoutesUser from '../../interfaces/routes/login.routes';
 import registerRoutesUser from '../../interfaces/routes/register.routes';
+import userRouter from '../../interfaces/routes/delete.routes';
 import User from '../models/login';
+import updateUser from '../../interfaces/routes/update.routes';
 
 dotenv.config();
 
@@ -32,8 +34,10 @@ class Server {
         this.app.get('/api/status', (req, res) => {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
         });
-        this.app.use('/api/users', loginRoutesUser);
-        this.app.use('/api/users', registerRoutesUser);
+        this.app.use('/api/users', userRouter);
+        this.app.use('/api/users', updateUser);
+        this.app.use('/api/auth', loginRoutesUser);
+        this.app.use('/api/auth', registerRoutesUser);
     }
 
     private middlewares() {

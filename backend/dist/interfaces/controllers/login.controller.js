@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginUser = void 0;
 const express_validator_1 = require("express-validator");
 const login_1 = __importDefault(require("../../infrestructure/models/login"));
-// import bcrypt from 'bcryptjs';  para cuadno la contrasena sea encriptada
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const console_1 = require("console");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -19,7 +18,7 @@ const loginUser = async (req, res) => {
     const { id, passwordEncrypt } = req.body;
     console.log("Datos del body:", { id, passwordEncrypt });
     try {
-        const user = await login_1.default.findOne({ where: { id: id } });
+        const user = await login_1.default.findOne({ where: { id: id, activo: 1 } });
         if (!user) {
             console.log("Usuario no encontrado", id);
             return res.status(400).json({
@@ -37,8 +36,8 @@ const loginUser = async (req, res) => {
             return;
         }
         const token = jsonwebtoken_1.default.sign({
-            id: user.id,
-            role: user.tipoUsuario,
+            userId: user.id,
+            role: Number(user.tipoUsuario),
         }, (_a = process.env['SECRET_KEY']) !== null && _a !== void 0 ? _a : 'pacoeltaco', {
             expiresIn: '1h'
         });

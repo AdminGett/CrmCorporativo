@@ -1,3 +1,125 @@
-<p>
-  user-register-modificar works!
-</p>
+<ion-content>
+  <div class="bg-gray-50">
+    <div class=" w-90 mx-auto py-8">
+      <div class="bg-white rounded-xl card-shadow border-0">
+        <div class="p-6 grid grid-cols-2 gap-4">
+          <h2 class="text-2xl font-semibold mb-6 text-gray-800">Lista de Usuarios Registrados</h2>
+
+          <div class="end-10 d-flex items-end justify-end me-5">
+            <label for="filter" class="mr-3 py-1">Filter By Name: </label>
+            <div class="input-group w-50">
+              <input id="filter" class="custom-input form-control border border-gray-200 rounded-start rounded-lg py-1"
+                type="text" [(ngModel)]="filterValue" />
+              <button *ngIf="filterValue.length > 0"
+                class="btn btn-outline-secondary border border-gray-200 border-start-0 rounded-end rounded-lg-start"
+                type="button" id="reset-button" (click)="clearInput()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg"
+                  viewBox="0 0 16 16">
+                  <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                </svg>
+              </button>
+            </div>
+            <button class="btn-primary px-3 py-1 rounded ml-3" (click)="findUserByName(filterValue)"><svg
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                <circle cx="10" cy="10" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg></button>
+          </div>
+
+          <p class="text-gray-600 text-sm">Este panel esta disenado pa usuarios deara modificar la informacion de
+            los usuarios en el sistema, este panel
+            es exclusivo para
+            administradores. Dentro de este panel se podra modificar la informacion de usarios ya registradosy que no han sido eliminados
+            permantentemente. 
+          </p>
+
+        </div>
+        <div class="card-shadow rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="admin-table w-full">
+              <thead>
+                <tr>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">ID</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nombre</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Apellido Paterno</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Apellido Materno</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de nacimiento</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Domicilio</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Numero de seguridad social</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Codigo Postal</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Pais</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Estado</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de Registro</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Tipo de usuario</th>
+                  <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let user of users" class="border-t border-gray-100">
+
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    <span>{{ user.userId }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.nombre }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.paterno }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.materno }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.fechaNacimiento }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.domicilio }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.nss }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.codigoPostal }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.pais }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.estado }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.fechaRegistro }}</span>
+                  </td>
+
+                  <td class="px-6 py-4">
+                    <span class="text-sm text-gray-900">{{ user.tipoUsuario }}</span>
+                  </td>
+                  <td class="px-6 py-4 text-center">
+                    <div class="flex items-center justify-center">
+                      <button (click)="goToUpdate(user.userId!)" class="btn-primary delete px-3 py-1 text-sm rounded">
+                        Modificar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

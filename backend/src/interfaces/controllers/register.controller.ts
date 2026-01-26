@@ -22,7 +22,8 @@ export const registerUser = async (req: Request, res: Response) => {
         estado,
         pais,
         fechaRegistro,
-        tipoUsuario
+        tipoUsuario,
+        activo
     } = req.body;
 
     // Validar campos obligatorios
@@ -38,7 +39,8 @@ export const registerUser = async (req: Request, res: Response) => {
         !estado ||
         !pais ||
         !fechaRegistro ||
-        !tipoUsuario
+        !tipoUsuario ||
+        !activo
     ) {
         res.status(400).json({ msg: "Todos los campos son obligatorios" });
         return;
@@ -61,7 +63,8 @@ export const registerUser = async (req: Request, res: Response) => {
             codigoPostal: codigoPostal,
             estado: estado,
             pais: pais,
-            tipoUsuario: tipoUsuario
+            tipoUsuario: tipoUsuario,
+            activo: 1
         });
 
         res.status(201).json({

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 interface JwtPayload {
   userId: number;
-  role: string;
+  role: number;
 }
 
 interface AuthRequest extends Request {
@@ -13,25 +13,25 @@ interface AuthRequest extends Request {
 export const verifyAdmin = (req: AuthRequest, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    res.status(401).json({ message: 'Ha ocurrido un error' });
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ message: 'Ha ocurrido un errorsllo' });
     return;
   }
 
   const token = authHeader.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY || 'ulisesfloresmtz') as JwtPayload;
+    const decoded = jwt.verify(token, process.env.SECRET_KEY || 'pacoeltaco') as JwtPayload;
 
-    if (decoded.role !== 'admin') {
-      res.status(403).json({ message: 'Acceso denegado.'});
+    if (decoded.role !== 1) {
+      res.status(403).json({ message: 'Acceso denegadote.'});
       return;
     }
 
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Ocurrio un error' });
+    res.status(401).json({ message: 'Ocurrio un errorsito' });
     return;
   }
 };
