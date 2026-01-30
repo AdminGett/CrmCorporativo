@@ -10,7 +10,6 @@ import { jwtDecode } from 'jwt-decode';
 interface TokenPayload {
   id: number;
   username: string;
-  email: string;
   role: string;
   exp: number;
 }
@@ -66,11 +65,6 @@ export class LoginComponent implements OnInit {
   // Redirigir al usuario según su rol (Para un futuro manejo de roles)
 
   private redirectBasedOnRole(role: string): void {
-    // if (role === 'admin') {
-    //     this.router.navigate(['/Dashboard']);
-    // } else {
-    //     this.router.navigate(['/Home']);
-    // }
     this.router.navigate(['/Home']);
   }
 

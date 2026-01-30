@@ -1,3 +1,4 @@
+<app-navbar></app-navbar>
 <ion-content>
     <div class="bg-gray-50">
         <div class="container mx-auto px-4 py-8 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-6xl">
@@ -118,24 +119,15 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                <input name="passwordEncrypt" [(ngModel)]="passwordEncrypt" type="password"
+                                <input name="passwordEncrypt" [(ngModel)]="passwordEncrypt" type="password"[type]="showPassword ? 'text' : 'password'"
                                     id="passwordEncrypt" autocomplete="Crear contraseña" placeholder="Crear contraseña"
                                     class="custom-input w-full pl-10 pr-10 h-12 border border-gray-200 rounded-lg"
                                     required />
-                                <button type="button" onclick="togglePassword('passwordEncrypt', 'passwordToggle')"
+                                <button type="button" 
+                                    (click)="togglePassword()"
                                     id="passwordToggle"
                                     class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hide-password">
-                                    <svg class="eye-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                    <svg class="eye-off-icon w-5 h-5" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-                                    </svg>
+                                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                                 </button>
                             </div>
                         </div>
@@ -149,26 +141,16 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password"
+                                <input [(ngModel)]="confirmPassword" name="confirmPassword" [type]="showPassword ? 'text' : 'password'"
                                     id="confirmPassword" placeholder="Confirm your password"
                                     autocomplete="confirmPassword"
                                     class="custom-input w-full pl-10 pr-10 h-12 border border-gray-200 rounded-lg"
                                     required />
                                 <button type="button"
-                                    onclick="togglePassword('confirmPassword', 'confirmPasswordToggle')"
+                                    (click)="togglePassword()"
                                     id="confirmPasswordToggle"
                                     class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hide-password">
-                                    <svg class="eye-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                    <svg class="eye-off-icon w-5 h-5" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" />
-                                    </svg>
+                                    <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                                 </button>
                             </div>
                         </div>
@@ -234,11 +216,13 @@
                                         <div class="fw-bold">Administrador</div>
                                         <div class="grid grid-cols-2 gap-8">
                                             <label>Permisos completos para gestionar usuarios y configuraciones del
-                                                sistema</label>
-                                            <div class="form-check">
-                                                <input [(ngModel)]="tipoUsuario" class="form-check-input" type="radio"
-                                                    name="tipoUsuario" id="type1" [value]="1">
-                                            </div>
+                                                sistema
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="tipoUsuario" class="form-check-input"
+                                                        type="radio" name="tipoUsuario" id="type1" [value]="1">
+                                                </div>
+                                            </label>
+
                                         </div>
                                     </div>
                                 </li>
@@ -247,11 +231,12 @@
                                         <div class="fw-bold"> Gerente </div>
                                         <div class="grid grid-cols-2 gap-8">
                                             <label> Permisos para supervisar equipos, generar informes y gestionar
-                                                proyectos.</label>
-                                            <div class="form-check">
-                                                <input [(ngModel)]="tipoUsuario" class="form-check-input" type="radio"
-                                                    name="tipoUsuario" id="type2" [value]="2">
-                                            </div>
+                                                proyectos.
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="tipoUsuario" class="form-check-input"
+                                                        type="radio" name="tipoUsuario" id="type2" [value]="2">
+                                                </div>
+                                            </label>
                                         </div>
                                     </div>
                                 </li>
@@ -260,19 +245,19 @@
                                         <div class="fw-bold">Tipo 3</div>
                                         <div class="grid grid-cols-2 gap-8">
                                             <label> Permisos limitados para tareas específicas según las necesidades del
-                                                rol.</label>
-                                            <div class="form-check">
-                                                <input [(ngModel)]="tipoUsuario" class="form-check-input" type="radio"
-                                                    name="tipoUsuario" id="type3" [value]="3">
-                                            </div>
+                                                rol.
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="tipoUsuario" class="form-check-input"
+                                                        type="radio" name="tipoUsuario" id="type3" [value]="3">
+                                                </div>
+                                            </label>
                                         </div>
                                     </div>
                                 </li>
                             </ol>
                         </div>
 
-                        <button type="submit" class="btn-primary w-full h-12 text-white font-medium rounded-lg"
-                            > 
+                        <button type="submit" class="btn-primary w-full h-12 text-white font-medium rounded-lg">
                             <span *ngIf="loading" class="flex items-center justify-center">
                                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -292,8 +277,7 @@
         </div>
     </div>
     <div class="position-fixed top-0 end-0 mt-20 me-5">
-        <button type="button"
-            class="btn-primary font-medium rounded-lg h-11 w-10 d-flex items-center justify-center"
+        <button type="button" class="btn-primary font-medium rounded-lg h-11 w-10 d-flex items-center justify-center"
             (click)="clearInputs()">
             <img src="../../assets/icon/limpiar.png" alt="Limpiar campos" class="w-6 h-6">
         </button>

@@ -7,6 +7,7 @@ import registerRoutesUser from '../../interfaces/routes/register.routes';
 import userRouter from '../../interfaces/routes/delete.routes';
 import User from '../models/login';
 import updateUser from '../../interfaces/routes/update.routes';
+import nameRouter from '../../interfaces/routes/navbar.routes'
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ class Server {
         });
         this.app.use('/api/users', userRouter);
         this.app.use('/api/users', updateUser);
+        this.app.use('/api/users', nameRouter);
         this.app.use('/api/auth', loginRoutesUser);
         this.app.use('/api/auth', registerRoutesUser);
     }

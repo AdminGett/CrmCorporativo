@@ -11,6 +11,7 @@ const register_routes_1 = __importDefault(require("../../interfaces/routes/regis
 const delete_routes_1 = __importDefault(require("../../interfaces/routes/delete.routes"));
 const login_1 = __importDefault(require("../models/login"));
 const update_routes_1 = __importDefault(require("../../interfaces/routes/update.routes"));
+const navbar_routes_1 = __importDefault(require("../../interfaces/routes/navbar.routes"));
 dotenv_1.default.config();
 class Server {
     constructor() {
@@ -33,6 +34,7 @@ class Server {
         });
         this.app.use('/api/users', delete_routes_1.default);
         this.app.use('/api/users', update_routes_1.default);
+        this.app.use('/api/users', navbar_routes_1.default);
         this.app.use('/api/auth', login_routes_1.default);
         this.app.use('/api/auth', register_routes_1.default);
     }
