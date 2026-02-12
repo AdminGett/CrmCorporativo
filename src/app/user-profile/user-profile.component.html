@@ -1,0 +1,103 @@
+<app-navbar></app-navbar>
+<ion-content>
+  <div class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-4xl">
+      <div class="bg-white rounded-xl card-shadow border-0">
+        <!-- Header -->
+        <div class="text-center p-6 pb-2">
+          <h1 class="text-2xl font-bold mb-2">{{userInfo?.nombre}}</h1>
+          <p class="text-gray-600 text-sm">Bienvenido este es tu perfil, aqui podras consultar tu
+            informacion
+          </p>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="id">ID: {{userInfo?.userId}}</label>
+            </div>
+            <div class="space-y-2">
+              <label *ngIf="userInfo && userInfo.activo === 1" class="text-sm font-medium text-gray-700"
+                for="activo">Activo</label>
+              <label *ngIf="userInfo && userInfo.activo === 0" class="text-sm font-medium text-gray-700"
+                for="activo">Inacivo</label>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="user_name">Nombre: {{userInfo?.nombre}}</label>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="paterno">Apellido Paterno:
+                {{userInfo?.paterno}}</label>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="materno">Apellido Materno:
+                {{userInfo?.materno}}</label>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="fechaNacimiento">Fecha de
+                nacimiento: {{userInfo?.fechaNacimiento }}</label>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="nss">Numero de seguro
+                social: {{userInfo?.nss}}</label>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="codigoPostal">Codigo
+                Postal: {{userInfo?.codigoPostal}}</label>
+            </div>
+
+          </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium text-gray-700" for="domicilio">Domicilio: {{userInfo?.domicilio}}</label>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="pais">Pais: {{userInfo?.pais}}</label>
+            </div>
+            <div class="space-y-2">
+              <label class="text-sm font-medium text-gray-700" for="estado">Estado: {{userInfo?.estado}}</label>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+
+            <label class="text-sm font-medium text-gray-700" for="pais"> Permisos de usuario</label>
+            <ol class="list-group list-group-numbered">
+              <li *ngIf="userInfo?.tipoUsuario === 1" class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Administrador</div>
+                  <div class="grid grid-cols-2 gap-8">
+                    <label>Permisos completos para gestionar usuarios y configuraciones del
+                      sistema</label>
+                  </div>
+                </div>
+              </li>
+              <li *ngIf="userInfo?.tipoUsuario === 2" class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold"> Gerente </div>
+                  <div class="grid grid-cols-2 gap-8">
+                    <label> Permisos para supervisar equipos, generar informes y gestionar
+                      proyectos.</label>
+                  </div>
+                </div>
+              </li>
+              <li *ngIf="userInfo?.tipoUsuario === 3" class="list-group-item d-flex justify-content-between align-items-start">
+                <div class="ms-2 me-auto">
+                  <div class="fw-bold">Tipo 3</div>
+                  <div class="grid grid-cols-2 gap-8">
+                    <label> Permisos limitados para tareas específicas según las necesidades del
+                      rol.</label>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="position-fixed top-0 end-0 mt-20 me-5">
+  </div>
+</ion-content>

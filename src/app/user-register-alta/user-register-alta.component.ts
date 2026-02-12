@@ -40,16 +40,10 @@ export class userRegisterAltaComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  togglePassword(inputId: string, toggleId: string) {
-    const passwordInput = document.getElementById(inputId) as HTMLInputElement | null;
-    const toggleButton = document.getElementById(toggleId);
+  showPassword = false;
 
-    if (passwordInput && toggleButton) {
-      const isPassword = passwordInput.type === 'password';
-      passwordInput.type = isPassword ? 'text' : 'password';
-      toggleButton.classList.toggle('show-password', isPassword);
-      toggleButton.classList.toggle('hide-password', !isPassword);
-    }
+  togglePassword():void{
+    this.showPassword=!this.showPassword
   }
 
   handleSubmit(event: Event) {

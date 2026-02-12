@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -19,12 +19,24 @@ import { deleteUsersComponent } from './user-register-baja/user-register-baja.co
 import { AddTokenInterceptor } from './core/utilities/addTokenInterceptor';
 import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent, userRegisterAltaComponent, deleteUsersComponent,updateUsersComponent , UpdatePanelComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, ToastrModule.forRoot({
+  declarations: [
+    AppComponent, 
+    LoginComponent, 
+    HomeComponent, 
+    userRegisterAltaComponent, 
+    deleteUsersComponent, 
+    updateUsersComponent, 
+    UpdatePanelComponent,
+    NavbarComponent,
+    UserProfileComponent
+  ],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
     positionClass: 'toast-bottom-right',
     timeOut: 3000,
     preventDuplicates: true

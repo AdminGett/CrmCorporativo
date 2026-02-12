@@ -38,6 +38,12 @@ export class UpdatePanelComponent implements OnInit {
     }
   }
 
+  showPassword = false;
+
+  togglePassword():void{
+    this.showPassword=!this.showPassword
+  }
+  
   loadUser(): void {
     
     this._updateServie.getUserInfo(this.userId).subscribe({

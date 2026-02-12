@@ -6,6 +6,7 @@ import { userRegisterAltaComponent } from './user-register-alta/user-register-al
 import { deleteUsersComponent } from './user-register-baja/user-register-baja.component';
 import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'users/update/getUser/:userId',
     component: UpdatePanelComponent
+  },
+  {
+    path: 'userProfile/:userId',
+    component: UserProfileComponent
   }
 ];
 
