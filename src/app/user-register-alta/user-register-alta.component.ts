@@ -97,7 +97,6 @@ export class userRegisterAltaComponent implements OnInit {
 
     try {
       const user: Register = {
-        userId: 0, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
         passwordEncrypt: this.passwordEncrypt,
         nombre: this.nombre,
         paterno: this.paterno,

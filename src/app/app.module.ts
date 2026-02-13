@@ -21,6 +21,7 @@ import { updateUsersComponent } from './user-register-modificar/user-register-mo
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
 
 
 
@@ -34,7 +35,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     updateUsersComponent, 
     UpdatePanelComponent,
     NavbarComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    PermissionPanelComponent
+
   ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
     positionClass: 'toast-bottom-right',
