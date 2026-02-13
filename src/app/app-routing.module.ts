@@ -7,6 +7,7 @@ import { deleteUsersComponent } from './user-register-baja/user-register-baja.co
 import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
   {
     path: 'userProfile/:userId',
     component: UserProfileComponent
+  },
+  {
+    path: 'd',
+    component: PermissionPanelComponent
   }
 ];
 
