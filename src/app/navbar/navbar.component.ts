@@ -12,6 +12,7 @@ import {TokenPayload} from '../../../shared/dto/payload'
 })
 
 export class NavbarComponent implements OnInit {
+  // Variables para manejar el estado de autenticación y la información del usuario
   isLoggedIn = false;
   showProfileMenu = false;
   userName = 'Usuario';
@@ -25,6 +26,7 @@ export class NavbarComponent implements OnInit {
     private readonly userService:userService
   ) { }
 
+  // Método de inicialización del componente
   ngOnInit() {
     this.checkAuthStatus();
     // Para cambios en el localStorage
@@ -35,9 +37,11 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  // Método para verificar el estado de autenticación del usuario
   private checkAuthStatus() {
     const token = localStorage.getItem('token');
 
+    // Si existe un token, intentar decodificarlo y verificar su validez
     if (token) {
       try {
         const decoded = jwtDecode<TokenPayload>(token);
@@ -49,9 +53,7 @@ export class NavbarComponent implements OnInit {
           this.userInfo  = decoded;
           this.userId = decoded.userId;
           
-
-          console.log(this.userInfo)
-          
+          // Obtener el nombre y rol del usuario utilizando su ID
           if(this.userId !== null){
             this.userService.getUserName(decoded.userId).subscribe({
             next:  (res)=>{
@@ -64,8 +66,6 @@ export class NavbarComponent implements OnInit {
           });
           }
 
-          console.log(this.userInfo);
-
         } else {
           // Por si el token expira
           console.warn('Token expirado, cerrando sesión automáticamente');
@@ -76,6 +76,7 @@ export class NavbarComponent implements OnInit {
         this.logout();
       }
     } else {
+      // Si no hay token, el usuario no está autenticado
       this.isLoggedIn = false;
       this.userName = 'Usuario';
       this.userInfo = null;

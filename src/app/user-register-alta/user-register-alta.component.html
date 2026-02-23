@@ -119,13 +119,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                <input name="passwordEncrypt" [(ngModel)]="passwordEncrypt" type="password"[type]="showPassword ? 'text' : 'password'"
-                                    id="passwordEncrypt" autocomplete="Crear contraseña" placeholder="Crear contraseña"
+                                <input name="passwordEncrypt" [(ngModel)]="passwordEncrypt" type="password"
+                                    [type]="showPassword ? 'text' : 'password'" id="passwordEncrypt"
+                                    autocomplete="Crear contraseña" placeholder="Crear contraseña"
                                     class="custom-input w-full pl-10 pr-10 h-12 border border-gray-200 rounded-lg"
                                     required />
-                                <button type="button" 
-                                    (click)="togglePassword()"
-                                    id="passwordToggle"
+                                <button type="button" (click)="togglePassword()" id="passwordToggle"
                                     class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hide-password">
                                     <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                                 </button>
@@ -141,14 +140,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                <input [(ngModel)]="confirmPassword" name="confirmPassword" [type]="showPassword ? 'text' : 'password'"
-                                    id="confirmPassword" placeholder="Confirm your password"
-                                    autocomplete="confirmPassword"
+                                <input [(ngModel)]="confirmPassword" name="confirmPassword"
+                                    [type]="showPassword ? 'text' : 'password'" id="confirmPassword"
+                                    placeholder="Confirm your password" autocomplete="confirmPassword"
                                     class="custom-input w-full pl-10 pr-10 h-12 border border-gray-200 rounded-lg"
                                     required />
-                                <button type="button"
-                                    (click)="togglePassword()"
-                                    id="confirmPasswordToggle"
+                                <button type="button" (click)="togglePassword()" id="confirmPasswordToggle"
                                     class="password-toggle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hide-password">
                                     <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
                                 </button>
@@ -210,51 +207,24 @@
                         <div class="space-y-2">
 
                             <label class="text-sm font-medium text-gray-700" for="pais"> Permisos de usuario</label>
-                            <ol class="list-group list-group-numbered">
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Administrador</div>
-                                        <div class="grid grid-cols-2 gap-8">
-                                            <label>Permisos completos para gestionar usuarios y configuraciones del
-                                                sistema
-                                                <div class="form-check">
-                                                    <input [(ngModel)]="tipoUsuario" class="form-check-input"
-                                                        type="radio" name="tipoUsuario" id="type1" [value]="1">
-                                                </div>
-                                            </label>
+                            <div class="dropdown">
+                                <select [(ngModel)]="tipoUsuario" name="tipoUsuario"
+                                        class="custom-input w-full h-12 border rounded-lg">
+                                        <option [ngValue]="0">Selecciona un tipo</option>
+                                        <option [ngValue]="1">Administrador</option>
+                                        <option [ngValue]="2">Gerente</option>
+                                        <option [ngValue]="3">Ejecutivo de ventas</option>
+                                        <option [ngValue]="4">Marketing</option>
+                                        <option [ngValue]="5">Servicio al cliente</option>
+                                        <option [ngValue]="6">Analista</option>
+                                        <option [ngValue]="7">Usuario</option>
+                                    </select>
+                                <div class="mt-2">
+                                    <p>Puesto seleccionado:</p>
+                                    <p *ngIf="tipoUsuario">{{ getNombrePuesto(tipoUsuario) }}</p>
+                                </div>
+                            </div>
 
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold"> Gerente </div>
-                                        <div class="grid grid-cols-2 gap-8">
-                                            <label> Permisos para supervisar equipos, generar informes y gestionar
-                                                proyectos.
-                                                <div class="form-check">
-                                                    <input [(ngModel)]="tipoUsuario" class="form-check-input"
-                                                        type="radio" name="tipoUsuario" id="type2" [value]="2">
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">Tipo 3</div>
-                                        <div class="grid grid-cols-2 gap-8">
-                                            <label> Permisos limitados para tareas específicas según las necesidades del
-                                                rol.
-                                                <div class="form-check">
-                                                    <input [(ngModel)]="tipoUsuario" class="form-check-input"
-                                                        type="radio" name="tipoUsuario" id="type3" [value]="3">
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ol>
                         </div>
 
                         <button type="submit" class="btn-primary w-full h-12 text-white font-medium rounded-lg">

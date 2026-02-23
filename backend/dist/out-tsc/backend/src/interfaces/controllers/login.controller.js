@@ -1,31 +1,36 @@
 import { validationResult } from 'express-validator';
 import User from '../../infrestructure/models/login';
-// import bcrypt from 'bcryptjs';  para cuadno lacontrasen sea encriptada
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { error } from 'console';
+import bcrypt from 'bcryptjs';
 export const loginUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({ msg: "Datos inválidos", errors: errors.array() });
-        return;
+        return res.status(400).json({ msg: "Datos inválidos", errors: errors.array() });
     }
-    const { id, contrasena } = req.body;
-    const user = await User.findOne({ where: { id: id } });
+    const { id, passwordEncrypt } = req.body;
+    console.log("Datos del body:", { id, passwordEncrypt });
     try {
+        const user = await User.findOne({ where: { id: id, activo: 1 } });
         if (!user) {
-            res.status(400).json({
+            console.log("Usuario no encontrado", id);
+            return res.status(400).json({
                 msg: `Ha ocurrido un problema, vuelve a intentar`
+            });
+        }
+        // if(passwordEncrypt !== user.passwordEncrypt){
+        //     return res.status(400).json({msg:"Ha ocurrido un error"});
+        // }
+        const passwordValid = await bcrypt.compare(passwordEncrypt, user.passwordEncrypt);
+        if (!passwordValid) {
+            res.status(400).json({
+                msg: "Ha ocurrido un problema, vuelve a intentar"
             });
             return;
         }
-        if (contrasena !== user.contrasena) {
-            res.status(400).json({ msg: "Ha ocurrido un error" });
-        }
         const token = jwt.sign({
-            id: user.id,
-            role: user.tipoUsuario,
-            username: user.nombreUsuario,
-            email: user.correo
+            userId: user.id,
+            role: Number(user.tipoUsuario),
         }, process.env['SECRET_KEY'] ?? 'pacoeltaco', {
             expiresIn: '1h'
         });

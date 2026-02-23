@@ -19,6 +19,7 @@ export interface IUserRegister {
     activo?: number;
 }
 
+// Para la creación, el ID y las fechas son opcionales porque los crea la BD
 export type UserCreationAttributes = Optional<IUserRegister, 'userId' | 'fechaRegistro' | 'activo'>;
 
 

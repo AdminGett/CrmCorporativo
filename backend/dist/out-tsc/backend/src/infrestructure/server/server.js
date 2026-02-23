@@ -1,6 +1,13 @@
-import * as express from 'express';
-import * as cors from 'cors';
-import * as dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import loginRoutesUser from '../../interfaces/routes/login.routes';
+import registerRoutesUser from '../../interfaces/routes/register.routes';
+import userRouter from '../../interfaces/routes/delete.routes';
+import User from '../models/login';
+import updateUser from '../../interfaces/routes/update.routes';
+import nameRouter from '../../interfaces/routes/navbar.routes';
+import permissionsRouter from '../../interfaces/routes/permissions.routes';
 dotenv.config();
 class Server {
     constructor() {
@@ -20,6 +27,12 @@ class Server {
         this.app.get('/api/status', (req, res) => {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
         });
+        this.app.use('/api/users', userRouter);
+        this.app.use('/api/users', updateUser);
+        this.app.use('/api/users', nameRouter);
+        this.app.use('/api/auth', loginRoutesUser);
+        this.app.use('/api/auth', registerRoutesUser);
+        this.app.use('/api/permissions', permissionsRouter);
     }
     middlewares() {
         this.app.use(express.json());
@@ -27,7 +40,7 @@ class Server {
     }
     async dbConnect() {
         try {
-            // await User.sync();
+            await User.sync();
             console.log('Base de datos conectada y sincronizada');
         }
         catch (error) {

@@ -1,3 +1,4 @@
+<!--Este código HTML define la estructura de una barra de navegación para una aplicación web.-->
 <nav>
   <div class="hidden md:block desktop-header sticky top-0 z-50">
     <div class="container mx-auto px-6 py-4">
@@ -12,7 +13,7 @@
             <ng-container *ngIf="isLoggedIn">
               <a *ngIf="userRole === 1 || userRole === 2" [routerLink]="['/AltaUsuario']" routerLinkActive="text-blue-600 font-semibold" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Alta de usuarios</a>
               <a *ngIf="userRole === 1 || userRole === 2" [routerLink]="['/BajaUsuario']" routerLinkActive="text-blue-600 font-semibold" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Baja de usuarios</a>
-              <a *ngIf="userRole === 1 || userRole === 2" [routerLink]="['/ModificarUsuario']" routerLinkActive="text-blue-600 font-semibold" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Moificar usuarios</a>
+              <a *ngIf="userRole === 1 || userRole === 2" [routerLink]="['/ModificarUsuario']" routerLinkActive="text-blue-600 font-semibold" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Modificar usuarios</a>
             </ng-container>
 
             <!-- <a [routerLink]="['/view']" routerLinkActive="text-blue-600 font-semibold" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Cotizacionar</a> -->

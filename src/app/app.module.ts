@@ -21,6 +21,14 @@ import { updateUsersComponent } from './user-register-modificar/user-register-mo
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
+import { AdminPermissionsComponent } from './admin-permissions/admin-permissions.component';
+import { GerentePermissionsComponent } from './gerente-permissions/gerente-permissions.component';
+import { VentasPermissionsComponent } from './ventas-permissions/ventas-permissions.component';
+import { MarketingPermissionsComponent } from './marketing-permissions/marketing-permissions.component';
+import { SoportePermissionsComponent } from './soporte-permissions/soporte-permissions.component';
+import { AnalisisPermissionsComponent } from './analisis-permissions/analisis-permissions.component';
+import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permissions.component';
 
 
 
@@ -34,7 +42,16 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     updateUsersComponent, 
     UpdatePanelComponent,
     NavbarComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    PermissionPanelComponent,
+    AdminPermissionsComponent,
+    GerentePermissionsComponent,
+    VentasPermissionsComponent,
+    MarketingPermissionsComponent,
+    SoportePermissionsComponent,
+    AnalisisPermissionsComponent,
+    UsuarioPermissionsComponent
+
   ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
     positionClass: 'toast-bottom-right',
