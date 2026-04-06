@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 <ion-content>
-  <div class="bg-gray-50">
-    <div class="w-90 mx-auto py-8">
+  <div class="w-75 justify-center items-center mx-auto py-8">
+    <div class=" mx-auto py-8">
       <div class="bg-white rounded-xl card-shadow border-0">
         <div class="p-6 grid grid-cols-2 gap-4">
           <h2 class="text-2xl font-semibold mb-6 text-gray-800">Lista de Usuarios Registrados</h2>
@@ -56,14 +56,10 @@
                 <tr>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">ID</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Nombre</th>
-                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Apellido Paterno</th>
-                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Apellido Materno</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de nacimiento</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Domicilio</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">NSS</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Código Postal</th>
-                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">País</th>
-                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Estado</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de Registro</th>
                   <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Tipo de usuario</th>
                   <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Acciones</th>
@@ -74,25 +70,29 @@
                 <tr *ngFor="let user of paginatedUsers" class="border-t border-gray-100 hover:bg-gray-50">
                   <!-- Tus columnas existentes... -->
                   <td class="px-6 py-4 text-sm text-gray-900">{{ user.userId }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.nombre }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.paterno }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.materno }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.nombre }} {{ user.paterno }} {{ user.materno }}</td>
                   <td class="px-6 py-4 text-sm text-gray-900">{{ user.fechaNacimiento }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.domicilio }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.domicilio }}, {{ user.estado }},  {{ user.pais }}</td>
                   <td class="px-6 py-4 text-sm text-gray-900">{{ user.nss }}</td>
                   <td class="px-6 py-4 text-sm text-gray-900">{{ user.codigoPostal }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.pais }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-900">{{ user.estado }}</td>
                   <td class="px-6 py-4 text-sm text-gray-900">{{ user.fechaRegistro }}</td>
                   <td class="px-6 py-4 text-sm text-gray-900">{{ user.tipoUsuario }}</td>
                   <td class="px-6 py-4 text-center">
-                    <!-- Tu botón de acciones existente -->
-                    <button (click)="toggleProfileMenu(user.userId)" ...>
-                      <!-- ... -->
+                    <button
+                    (click)="toggleProfileMenu(user.userId!)"
+                    class="px-3 py-1 border rounded hover:bg-gray-100">
+                    ⋮
                     </button>
-                    <!-- Menú desplegable -->
-                    <div *ngIf="openMenuUserId===user.userId" class="absolute right-0 mt-2 w-48 ...">
-                      <!-- ... -->
+
+                    <div *ngIf="openMenuUserId === user.userId"
+                    class="absolute  right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10">
+                      <button (click)="goToUpdate(user.userId!)" class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        Modificar
+                      </button>
+                      <button (click)="goToPermissions(user.userId!)" class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        Permisos
+                      </button>
+
                     </div>
                   </td>
                 </tr>

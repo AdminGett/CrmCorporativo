@@ -19,6 +19,7 @@ export class updateUsersComponent implements OnInit {
   buscado: boolean = false;
   showProfileMenu = false;
   openMenuUserId : number | null = null;
+  UserId: number | null = null;
 
   // Variables para paginación
   currentPage: number = 1;
@@ -149,8 +150,10 @@ export class updateUsersComponent implements OnInit {
           this.toastr.info('No se encontraron usuarios con ese nombre', 'Información');
           
           return;
-        }
+        } 
         this.users = data;
+        this,this.currentPage = 1;
+      this.calculateTotalPages();
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error al buscar usuarios:', error);
@@ -167,6 +170,7 @@ export class updateUsersComponent implements OnInit {
     const textInputs = document.querySelectorAll('input[type="text"]');
     textInputs.forEach((input: any) => {
      this.filterValue= '';
+     this.fetchUsers();
     });
   }
 

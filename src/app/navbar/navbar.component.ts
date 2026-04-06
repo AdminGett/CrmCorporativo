@@ -65,7 +65,6 @@ export class NavbarComponent implements OnInit {
             }
           });
           }
-
         } else {
           // Por si el token expira
           console.warn('Token expirado, cerrando sesión automáticamente');
@@ -83,11 +82,12 @@ export class NavbarComponent implements OnInit {
       this.userRole = null; 
     }
   }
-
+// Método para alternar la visibilidad del menú de perfil
   toggleProfileMenu() {
     this.showProfileMenu = !this.showProfileMenu;
   }
 
+  // Método para cerrar sesión, eliminando el token del localStorage y restableciendo el estado del componente
   logout() {
     localStorage.removeItem('token');
     this.isLoggedIn = false;
@@ -101,6 +101,7 @@ export class NavbarComponent implements OnInit {
     this.showProfileMenu = false;
   }
 
+  // Método para redirigir al perfil del usuarioS
   goToProfile(userId:number):void {
    this.router.navigate(['/userProfile', userId]);
   }

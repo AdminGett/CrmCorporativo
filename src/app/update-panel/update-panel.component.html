@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <ion-content>
-  <div class="bg-gray-50">
+  <div class="">
     <div class="container mx-auto px-4 py-8 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-6xl">
       <div class="bg-white rounded-xl card-shadow border-0">
         <!-- Header -->
@@ -25,7 +25,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
-                  <input [(ngModel)]="editingUser.userId" name="id" type="text" id="id" placeholder="id"
+                  <input [(ngModel)]="editingUser.userId" name="id" disabled type="text" id="id" placeholder="id"
                     autocomplete="id" class="custom-input w-full pl-10 h-12 border border-gray-200 rounded-lg"
                     required />
                 </div>
@@ -193,51 +193,29 @@
                   </div>
                 </div>
 
-                <div class="space-y-2">
+               <div class="space-y-2">
 
-                  <label class="text-sm font-medium text-gray-700" for="pais"> Permisos de usuario</label>
-                  <ol class="list-group list-group-numbered">
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-bold">Administrador</div>
-                        <div class="grid grid-cols-2 gap-8">
-                          <label>Permisos completos para gestionar usuarios y configuraciones del
-                            sistema</label>
-                          <div class="form-check">
-                            <input [(ngModel)]="editingUser.tipoUsuario" class="form-check-input" type="radio"
-                              name="tipoUsuario" id="type1" [value]="1">
-                          </div>
+                            <label class="text-sm font-medium text-gray-700" for="pais"> Permisos de usuario</label>
+                            <div class="dropdown">
+                                <select [(ngModel)]="tipoUsuario" name="tipoUsuario"
+                                        class="custom-input w-full h-12 border rounded-lg">
+                                        <option [ngValue]="0">Selecciona un tipo</option>
+                                        <option [ngValue]="1">Administrador</option>
+                                        <option [ngValue]="2">Gerente</option>
+                                        <option [ngValue]="3">Ejecutivo de ventas</option>
+                                        <option [ngValue]="4">Marketing</option>
+                                        <option [ngValue]="5">Servicio al cliente</option>
+                                        <option [ngValue]="6">Analista</option>
+                                        <option [ngValue]="7">Usuario</option>
+                                    </select>
+                                <div class="mt-2">
+                                    <p>Puesto seleccionado:</p>
+                                    <p *ngIf="tipoUsuario">{{ getNombrePuesto(tipoUsuario) }}</p>
+                                </div>
+                            </div>
+
                         </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-bold"> Gerente </div>
-                        <div class="grid grid-cols-2 gap-8">
-                          <label> Permisos para supervisar equipos, generar informes y gestionar
-                            proyectos.</label>
-                          <div class="form-check">
-                            <input [(ngModel)]="editingUser.tipoUsuario" class="form-check-input" type="radio"
-                              name="tipoUsuario" id="type2" [value]="2">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-start">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-bold">Tipo 3</div>
-                        <div class="grid grid-cols-2 gap-8">
-                          <label> Permisos limitados para tareas específicas según las necesidades del
-                            rol.</label>
-                          <div class="form-check">
-                            <input [(ngModel)]="editingUser.tipoUsuario" class="form-check-input" type="radio"
-                              name="tipoUsuario" id="type3" [value]="3">
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
+
 
                 <button type="submit" class="btn-primary w-full h-12 text-white font-medium rounded-lg">
                   <span *ngIf="loading" class="flex items-center justify-center">

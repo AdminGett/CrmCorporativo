@@ -18,19 +18,7 @@ const updateUser = async (req, res) => {
         }
         // Se crea un objeto updateData que contiene los nuevos datos del usuario, y si se proporciona una nueva contraseña, se hashea antes de agregarla al objeto updateData. Luego, se actualiza el registro del usuario en la base de datos utilizando Sequelize y se devuelve una respuesta indicando que el usuario ha sido actualizado correctamente
         const updateData = {
-            nombre,
-            passwordEncrypt,
-            paterno,
-            materno,
-            fechaNacimiento,
-            domicilio,
-            nss,
-            codigoPostal,
-            estado,
-            pais,
-            fechaRegistro,
-            tipoUsuario,
-            activo
+            nombre, passwordEncrypt, paterno, materno, fechaNacimiento, domicilio, nss, codigoPostal, estado, pais, fechaRegistro, tipoUsuario, activo
         };
         // Si se proporciona una nueva contraseña, se hashea antes de agregarla al objeto updateData
         if (passwordEncrypt && passwordEncrypt.trim() !== '') {

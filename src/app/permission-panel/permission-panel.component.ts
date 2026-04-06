@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenPayload } from '../../../shared/dto/payload'
 import { jwtDecode } from 'jwt-decode';
-import { userService } from '../../services/navbar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../services/auth.service';
 import { Register } from 'shared/dto/register.dto';
 import { permissionsService } from 'src/services/permission.service';
 import { permissions } from 'shared/dto/permission.dto';
@@ -41,7 +39,6 @@ export class PermissionPanelComponent implements OnInit {
     // Obtener el userId de la URL (NO del token)
     this.routes.params.subscribe(params => {
       this.userId = Number(params['userId']);
-      console.log('ID del usuario seleccionado:', this.userId);
 
       if (this.userId) {
         this.loadUserInfo(this.userId);
@@ -73,7 +70,6 @@ export class PermissionPanelComponent implements OnInit {
       }
     });
   }
-
   // Verificar permisos del usuario LOGEADO (para saber qué puede ver)
   checkAuthStatus() {
     const token = localStorage.getItem('token');

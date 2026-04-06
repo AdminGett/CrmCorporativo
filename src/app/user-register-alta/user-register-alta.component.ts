@@ -70,18 +70,6 @@ export class userRegisterAltaComponent implements OnInit {
     this.addUser();
   }
 
-   getTipoUsuarioIcono(tipo: number | null): string {
-    const iconos: {[key: number]: string} = {
-      1: '👑',
-      2: '📊',
-      3: '💼',
-      4: '📢',
-      5: '🛠️',
-      6: '📈',
-      7: '👤'
-    };
-    return tipo ? iconos[tipo] : '';
-  }
   async addUser() {
   if (this.passwordEncrypt !== this.confirmPassword) {
     this.toastr.error('Las contraseñas no coinciden', 'Error');

@@ -71,12 +71,7 @@ const getUserByIDd = async (req, res) => {
     // tipoUsuario' para devolverlos en la respuesta. Si no se encuentra ningún usuario con ese ID, 
     // se devuelve un error 404 indicando que el usuario no fue encontrado  
     try {
-        const user = await register_1.default.findOne({
-            where: {
-                userId
-            },
-            attributes: ['nombre', 'tipoUsuario', 'paterno', 'materno']
-        });
+        const user = await register_1.default.findByPk(userId);
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }

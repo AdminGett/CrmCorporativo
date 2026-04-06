@@ -1,8 +1,8 @@
 import { body } from 'express-validator';
-
-// Se definen validaciones para la creación de un nuevo usuario, utilizando express-validator para validar los campos de entrada y asegurarse de que cumplen con los requisitos establecidos, como formato, longitud y obligatoriedad
+// Se definen validaciones para la creación de un nuevo usuario, utilizando express-validator 
+// para validar los campos de entrada y asegurarse de que cumplen con los requisitos establecidos, 
+// como formato, longitud y obligatoriedad
 export const validateCreateUser = [
-
   body('nombre')
     .trim()
     .notEmpty().withMessage('El nombre es obligatorio')

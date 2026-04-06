@@ -12,10 +12,8 @@ export const loginUser = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ msg: "Datos inválidos", errors: errors.array() });
     }
-
     // Se extraen el ID y la contraseña encriptada del cuerpo de la solicitud, que son necesarios para verificar las credenciales del usuario
     const { id, passwordEncrypt } = req.body;
-
     // Se intenta encontrar un usuario en la base de datos que coincida con el ID proporcionado y que esté activo (activo: 1). Si no se encuentra ningún usuario, se devuelve un error 400 indicando que ha ocurrido un problema
     try {
         const user: any = await User.findOne({ where: { id: id, activo: 1 } }) as IUserAttributes | null;
@@ -25,14 +23,12 @@ export const loginUser = async (req: Request, res: Response) => {
                 msg: `Ha ocurrido un problema, vuelve a intentar`
             });
         }
-
         // Si el usuario encontrado tiene el campo 'bloqueado' igual a 1, se devuelve un error 403 indicando que la cuenta ha sido bloqueada debido a múltiples intentos fallidos de inicio de sesión
         if (user.bloqueado === 1) {
             return res.status(403).json({
                 msg: "Tu cuenta ha sido bloqueada debido a múltiples intentos fallidos. Por favor, contacta al administrador."
             });
         }
-
         // Se compara la contraseña proporcionada con la contraseña encriptada almacenada en la base de datos utilizando bcrypt. Si las contraseñas no coinciden, se incrementa el contador de intentos de inicio de sesión fallidos y se bloquea la cuenta si se alcanzan 5 intentos fallidos, devolviendo un error 400 con un mensaje indicando que ha ocurrido un problema y el número de intentos actuales
         const passwordValid = await bcrypt.compare(passwordEncrypt, user.passwordEncrypt);
         if (!passwordValid) {
@@ -44,14 +40,12 @@ export const loginUser = async (req: Request, res: Response) => {
                 {
                     where: { id: user.id }
                 });
-
             res.status(400).json({
                 msg: "Ha ocurrido un problema, vuelve a intentar",
                 intentos: nuevosIntentos
             });
             return;
         }
-
         // Si las credenciales son válidas, se restablece el contador de intentos de inicio de sesión fallidos a 0 y se genera un token JWT que incluye el ID del usuario y su rol, con una expiración de 1 hora. Finalmente, se devuelve el token en la respuesta
         await User.update({
             intentosLogueo: 0,

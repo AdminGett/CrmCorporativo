@@ -141,7 +141,6 @@ export class deleteUsersComponent implements OnInit {
     }
     this.buscado =  true;
 
-    console.log('Buscando usuario por nombre:', name);
 
     this._deleteService.searchByName(search).subscribe({
 
@@ -153,6 +152,8 @@ export class deleteUsersComponent implements OnInit {
           return;
         }
         this.users = data;
+         this,this.currentPage = 1;
+      this.calculateTotalPages();
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error al buscar usuarios:', error);
@@ -169,6 +170,7 @@ export class deleteUsersComponent implements OnInit {
     const textInputs = document.querySelectorAll('input[type="text"]');
     textInputs.forEach((input: any) => {
      this.filterValue= '';
+      this.fetchUsers();
     });
   }
 }

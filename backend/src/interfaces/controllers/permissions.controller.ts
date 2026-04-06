@@ -27,8 +27,6 @@ export const updatePermissions = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error al actualizar permisos del usuario' });
         return;
     }
-
-    
 };
 
 // Controlador para obtener la información de un usuario específico, incluyendo sus permisos, permitiendo la visualización de esta información en el frontend
