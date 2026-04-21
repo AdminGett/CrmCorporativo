@@ -8,14 +8,18 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { ErrorService } from '../../../services/error.service';
+import { ErrorService } from '../../services/error.service';
 
 @Injectable()
 export class AddTokenInterceptor implements HttpInterceptor {
 
-  constructor(private readonly router: Router, private readonly _errorService: ErrorService) {}
+  constructor(
+    private readonly router: Router,
+    private readonly _errorService: ErrorService
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -26,11 +30,17 @@ export class AddTokenInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 || error.status === 403) {
+
+        if (error.status === 401) {
           localStorage.removeItem('token');
-          this._errorService.msjError(error);
           this.router.navigate(['/login']);
         }
+
+        if (error.status === 403) {
+          this.router.navigate(['/accessDenied']);
+        }
+
+        this._errorService.msjError(error);
 
         return throwError(() => error);
       })

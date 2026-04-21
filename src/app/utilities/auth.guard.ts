@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 interface TokenPayload {
-  id: number;
-  email: string;
-  username: string;
+  user_Id: number;
   role: string;
   exp: number; // Timestamp de expiración en segundos
 }
@@ -15,14 +12,15 @@ interface TokenPayload {
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
-    
+  ):boolean {
+
     const token = localStorage.getItem('token');
+    
 
     if (!token) {
       this.router.navigate(['/login']);
@@ -31,21 +29,28 @@ export class AuthGuard implements CanActivate {
 
     try {
       const decoded = jwtDecode<TokenPayload>(token);
-      
+
       // Verificar si el token ha expirado
       const currentTime = Date.now() / 1000; // Convertir a segundos
-      
+
       if (decoded.exp < currentTime) {
         // Token expirado, limpiar localStorage y redirigir
         console.warn('Token expirado, redirigiendo al login');
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
         return false;
+
       }
-      
+
+      if(decoded.role.toString() !== '1' && decoded.role.toString()  !== '2'){
+        console.log(decoded.role)
+        this.router.navigate(['/accessDenied']);
+        return false;
+      }
+
       // Token válido y no expirado
       return true;
-      
+
     } catch (error) {
       // Token inválido o malformado
       console.error('Token inválido:', error);
@@ -53,5 +58,7 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['/login']);
       return false;
     }
+
+    
   }
 }

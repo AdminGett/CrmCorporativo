@@ -20,6 +20,7 @@ export class UpdatePanelComponent implements OnInit {
   userId!: number;
   editingUser:Register | null = null;
    loading: boolean = false;
+   tipoUsuario: number = 0;
 
   constructor(
     private readonly authService: AuthService,
@@ -55,6 +56,19 @@ export class UpdatePanelComponent implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  getNombrePuesto(tipo: number): string {
+    const puestos: { [key: number]: string } = {
+      1: 'Administrador',
+      2: 'Gerente',
+      3: 'Ejecutivo de ventas',
+      4: 'Marketing',
+      5: 'Servicio al cliente',
+      6: 'Analista',
+      7: 'Usuario'
+    };
+    return puestos[tipo] || 'Desconocido';
   }
 
   saveUser():void{

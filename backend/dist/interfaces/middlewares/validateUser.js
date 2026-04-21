@@ -2,6 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateLogin = exports.validateCreateUser = void 0;
 const express_validator_1 = require("express-validator");
+// Se definen validaciones para la creación de un nuevo usuario, utilizando express-validator 
+// para validar los campos de entrada y asegurarse de que cumplen con los requisitos establecidos, 
+// como formato, longitud y obligatoriedad
 exports.validateCreateUser = [
     (0, express_validator_1.body)('nombre')
         .trim()
