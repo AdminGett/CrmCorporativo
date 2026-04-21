@@ -22,6 +22,7 @@ import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
+<<<<<<< HEAD
 import { AdminPermissionsComponent } from './admin-permissions/admin-permissions.component';
 import { GerentePermissionsComponent } from './gerente-permissions/gerente-permissions.component';
 import { VentasPermissionsComponent } from './ventas-permissions/ventas-permissions.component';
@@ -29,6 +30,8 @@ import { MarketingPermissionsComponent } from './marketing-permissions/marketing
 import { SoportePermissionsComponent } from './soporte-permissions/soporte-permissions.component';
 import { AnalisisPermissionsComponent } from './analisis-permissions/analisis-permissions.component';
 import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permissions.component';
+=======
+>>>>>>> origin/AMan
 
 
 
@@ -43,6 +46,7 @@ import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permi
     UpdatePanelComponent,
     NavbarComponent,
     UserProfileComponent,
+<<<<<<< HEAD
     PermissionPanelComponent,
     AdminPermissionsComponent,
     GerentePermissionsComponent,
@@ -51,6 +55,9 @@ import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permi
     SoportePermissionsComponent,
     AnalisisPermissionsComponent,
     UsuarioPermissionsComponent
+=======
+    PermissionPanelComponent
+>>>>>>> origin/AMan
 
   ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({

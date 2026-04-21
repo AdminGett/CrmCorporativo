@@ -27,6 +27,7 @@ export class userRegisterAltaComponent implements OnInit {
   fechaRegistro: Date = new Date();
   tipoUsuario: number = 0;
   activo: number = 1;
+  userId: number = 0;
 
   adminOption: number = 3;
   loading: boolean = false;
@@ -38,7 +39,8 @@ export class userRegisterAltaComponent implements OnInit {
     private readonly _errorService: ErrorService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+  }
 
   showPassword = false;
 
@@ -110,7 +112,7 @@ export class userRegisterAltaComponent implements OnInit {
 
     try {
       const user: Register = {
-        userId: 0, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
+        userId: this.userId, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
         passwordEncrypt: this.passwordEncrypt,
         nombre: this.nombre,
         paterno: this.paterno,
