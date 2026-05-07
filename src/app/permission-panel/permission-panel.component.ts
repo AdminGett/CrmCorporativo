@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
 import { TokenPayload } from '../../../shared/dto/payload'
 import { jwtDecode } from 'jwt-decode';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,14 +6,11 @@ import { ToastrService } from 'ngx-toastr';
 import { Register } from 'shared/dto/register.dto';
 import { permissionsService } from 'src/services/permission.service';
 import { permissions } from 'shared/dto/permission.dto';
-=======
->>>>>>> origin/AMan
 
 @Component({
   selector: 'app-permission-panel',
   templateUrl: './permission-panel.component.html',
   styleUrls: ['./permission-panel.component.scss'],
-<<<<<<< HEAD
   standalone: false,
 
 })
@@ -111,14 +107,3 @@ export class PermissionPanelComponent implements OnInit {
     this.router.navigate(['/ModificarUsuario']);
   }
 }
-=======
-  standalone: false
-})
-export class PermissionPanelComponent  implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {}
-
-}
->>>>>>> origin/AMan

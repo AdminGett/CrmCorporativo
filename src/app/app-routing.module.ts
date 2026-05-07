@@ -8,11 +8,8 @@ import { updateUsersComponent } from './user-register-modificar/user-register-mo
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
-<<<<<<< HEAD
 import { ErrorAccesoComponent } from './error-acceso/error-acceso.component';
 import { AuthGuard } from './utilities/auth.guard';
-=======
->>>>>>> origin/AMan
 
 const routes: Routes = [
   {
@@ -53,7 +50,6 @@ const routes: Routes = [
     component: UserProfileComponent
   },
   {
-<<<<<<< HEAD
     component: PermissionPanelComponent,
     path: 'permissions/:userId',
     canActivate: [AuthGuard]
@@ -61,10 +57,6 @@ const routes: Routes = [
   {
     component:ErrorAccesoComponent,
     path:'accessDenied'
-=======
-    path: 'd',
-    component: PermissionPanelComponent
->>>>>>> origin/AMan
   }
 ];
 
