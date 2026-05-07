@@ -1,0 +1,25 @@
+<!-- Se define el formulario para la gestión de permisos de un usuario, que incluye una estructura de tarjetas 
+ para organizar los diferentes grupos de permisos, con un botón para guardar los cambios realizados en los permisos #
+ seleccionados, y utiliza Angular para manejar la lógica de cambio y envío del formulario -->
+<form id="permissionFrom" class="space-y-4 card" #form="ngForm" (ngSubmit)="saveChanges()">
+  <div class="card-body space-y-6">
+    <div class="mt-2 ml-5">
+      <div class="grid grid-cols-3 gap-4">
+        <div *ngFor="let group of groups | keyvalue" class="mt-2 ml-5">
+          <div>
+          <h2 class="text-lg font-semibold text-gray-800">{{ moduleNames[group.key]}}</h2>
+          <div *ngFor="let perm of group.value" class="relative form-check form-switch">
+            <input type="checkbox" role="switch" class="form-check-input" (change)="onActivoChange($event, perm)"
+              [checked]="perm.allowed === 1">
+            {{ perm.permissionsCatalog.descripcion }}
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="d-flex justify-content-center align-items-center">
+    <button type="submit" class="btn btn-primary ml-5 mb-3">Guardar Cambios</button>
+  </div>
+</form>

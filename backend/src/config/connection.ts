@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-
+// Cargamos las variables de entorno desde el archivo .env
 const sequelize = new Sequelize(
   process.env['DB_NAME'] ?? 'SisCrm',
   process.env['DB_USER'] ?? 'robin',

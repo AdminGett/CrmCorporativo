@@ -48,6 +48,19 @@ export class userRegisterAltaComponent implements OnInit {
     this.showPassword=!this.showPassword
   }
 
+  getNombrePuesto(tipo: number): string {
+    const puestos: { [key: number]: string } = {
+      1: 'Administrador',
+      2: 'Gerente',
+      3: 'Ejecutivo de ventas',
+      4: 'Marketing',
+      5: 'Servicio al cliente',
+      6: 'Analista',
+      7: 'Usuario'
+    };
+    return puestos[tipo] || 'Desconocido';
+  }
+
   handleSubmit(event: Event) {
     event.preventDefault();
 

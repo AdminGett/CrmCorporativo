@@ -8,6 +8,8 @@ import { updateUsersComponent } from './user-register-modificar/user-register-mo
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
+import { ErrorAccesoComponent } from './error-acceso/error-acceso.component';
+import { AuthGuard } from './utilities/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,27 +27,36 @@ const routes: Routes = [
   },
   {
     path: 'AltaUsuario',
-    component: userRegisterAltaComponent
+    component: userRegisterAltaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'BajaUsuario',
-    component: deleteUsersComponent
+    component: deleteUsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'ModificarUsuario',
-    component: updateUsersComponent
+    component: updateUsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'users/update/getUser/:userId',
-    component: UpdatePanelComponent
+    component: UpdatePanelComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'userProfile/:userId',
     component: UserProfileComponent
   },
   {
-    path: 'd',
-    component: PermissionPanelComponent
+    component: PermissionPanelComponent,
+    path: 'permissions/:userId',
+    canActivate: [AuthGuard]
+  },
+  {
+    component:ErrorAccesoComponent,
+    path:'accessDenied'
   }
 ];
 

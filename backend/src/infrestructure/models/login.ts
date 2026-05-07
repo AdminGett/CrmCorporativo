@@ -5,10 +5,10 @@ import sequelize from '../../config/connection';
 export interface IUser {
   id: number;
   tipoUsuario: string;
-  activo: boolean;
+  activo: number;
   ultimaActividad?: Date | null; // Puede ser null al inicio
   intentosLogueo: number;
-  bloqueado: boolean;
+  bloqueado: number;
 }
 
 //interfaz pra poder ingresar
@@ -24,10 +24,10 @@ export class UserInstance extends Model<IUserAttributes, UserCreationAttributes>
   public id!: number;
   public passwordEncrypt!: string; 
   public tipoUsuario!: string;
-  public activo!: boolean;
+  public activo!: number;
   public intentosLogueo!: number;
   public ultimaActividad!: Date | null;
-  public bloqueado!: boolean;
+  public bloqueado!: number;
 }
 
 // Aqui se "copia" la base de datos de SQL para hacer consultas
@@ -57,12 +57,12 @@ const User = sequelize.define<UserInstance>('User', {
   },
   activo: {
     type: DataTypes.INTEGER,
-    defaultValue: true,
+    defaultValue: 1,
     allowNull: false
   },
   bloqueado: {
     type: DataTypes.INTEGER,
-    defaultValue: false,
+    defaultValue: 0,
     allowNull: false
   }
   

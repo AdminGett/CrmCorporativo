@@ -1,4 +1,5 @@
 export const environment = {
-    production: true
+    production: false,
+    endpoint: 'http://localhost:3000/api/'
 };
 //# sourceMappingURL=environment.prod.js.map

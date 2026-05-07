@@ -7,12 +7,14 @@ exports.registerUser = void 0;
 const express_validator_1 = require("express-validator");
 const register_1 = __importDefault(require("../../infrestructure/models/register"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+// Controlador para manejar el proceso de registro de un nuevo usuario, validando los datos de entrada, hasheando la contraseña y creando un nuevo registro en la base de datos
 const registerUser = async (req, res) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
         return;
     }
+    // Se extraen los campos necesarios del cuerpo de la solicitud, que son requeridos para el proceso de registro de un nuevo usuario
     const { nombre, passwordEncrypt, paterno, materno, fechaNacimiento, domicilio, nss, codigoPostal, estado, pais, fechaRegistro, tipoUsuario, activo } = req.body;
     // Validar campos obligatorios
     if (!nombre ||
@@ -51,19 +53,6 @@ const registerUser = async (req, res) => {
         });
         res.status(201).json({
             msg: `Usuario ${nombre} creado exitosamente`,
-            user: {
-                nombre: newUser.get('nombre'),
-                paterno: newUser.get('paterno'),
-                materno: newUser.get('materno'),
-                fechaNacimiento: newUser.get('fechaNacimiento'),
-                domicilio: newUser.get('domicilio'),
-                nss: newUser.get('nss'),
-                codigoPostal: newUser.get('codigoPostal'),
-                estado: newUser.get('estado'),
-                pais: newUser.get('pais'),
-                fechaRegistro: newUser.get('fechaRegistro'),
-                tipoUsuario: newUser.get('tipoUsuario')
-            }
         });
     }
     catch (error) {

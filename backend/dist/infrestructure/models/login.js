@@ -37,12 +37,12 @@ const User = connection_1.default.define('User', {
     },
     activo: {
         type: sequelize_1.DataTypes.INTEGER,
-        defaultValue: true,
+        defaultValue: 1,
         allowNull: false
     },
     bloqueado: {
         type: sequelize_1.DataTypes.INTEGER,
-        defaultValue: false,
+        defaultValue: 0,
         allowNull: false
     }
 }, {

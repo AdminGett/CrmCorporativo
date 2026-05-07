@@ -16,27 +16,41 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { userRegisterAltaComponent } from './user-register-alta/user-register-alta.component';
 import { deleteUsersComponent } from './user-register-baja/user-register-baja.component';
-import { AddTokenInterceptor } from './core/utilities/addTokenInterceptor';
+import { AddTokenInterceptor } from '../app/utilities/add-token.interceptor';
 import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
+import { AdminPermissionsComponent } from './admin-permissions/admin-permissions.component';
+import { GerentePermissionsComponent } from './gerente-permissions/gerente-permissions.component';
+import { VentasPermissionsComponent } from './ventas-permissions/ventas-permissions.component';
+import { MarketingPermissionsComponent } from './marketing-permissions/marketing-permissions.component';
+import { SoportePermissionsComponent } from './soporte-permissions/soporte-permissions.component';
+import { AnalisisPermissionsComponent } from './analisis-permissions/analisis-permissions.component';
+import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permissions.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    LoginComponent, 
-    HomeComponent, 
-    userRegisterAltaComponent, 
-    deleteUsersComponent, 
-    updateUsersComponent, 
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    userRegisterAltaComponent,
+    deleteUsersComponent,
+    updateUsersComponent,
     UpdatePanelComponent,
     NavbarComponent,
     UserProfileComponent,
-    PermissionPanelComponent
+    PermissionPanelComponent,
+    AdminPermissionsComponent,
+    GerentePermissionsComponent,
+    VentasPermissionsComponent,
+    MarketingPermissionsComponent,
+    SoportePermissionsComponent,
+    AnalisisPermissionsComponent,
+    UsuarioPermissionsComponent
 
   ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
@@ -53,7 +67,8 @@ import { PermissionPanelComponent } from './permission-panel/permission-panel.co
       provide: HTTP_INTERCEPTORS,
       useClass: AddTokenInterceptor,
       multi: true
-    }],
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
