@@ -58,6 +58,7 @@ export const getUserByName = async (req: Request, res: Response) => {
                 } 
             }
         );
+        
         // Si no se encuentra ningún usuario que coincida con el término de búsqueda, se devuelve un error 404 indicando que no se encontraron usuarios
         if (user.length === 0) {
             res.status(404).json({ message: 'No se encontraron usuarios con ese nombre' });

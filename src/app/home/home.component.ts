@@ -15,6 +15,7 @@ interface TokenPayload {
   styleUrls: ['./home.component.scss'],
   standalone: false,
 })
+
 export class HomeComponent  implements OnInit {
 
   userInfo: any = null;

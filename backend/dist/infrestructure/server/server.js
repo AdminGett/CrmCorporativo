@@ -13,6 +13,7 @@ const login_1 = __importDefault(require("../models/login"));
 const update_routes_1 = __importDefault(require("../../interfaces/routes/update.routes"));
 const navbar_routes_1 = __importDefault(require("../../interfaces/routes/navbar.routes"));
 const permissions_routes_1 = __importDefault(require("../../interfaces/routes/permissions.routes"));
+const workload_routes_1 = __importDefault(require("../../interfaces/routes/workload.routes"));
 dotenv_1.default.config();
 // Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
@@ -43,6 +44,7 @@ class Server {
         this.app.use('/api/auth', login_routes_1.default);
         this.app.use('/api/auth', register_routes_1.default);
         this.app.use('/api/permissions', permissions_routes_1.default);
+        this.app.use('/api/workloads', workload_routes_1.default);
     }
     // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
     middlewares() {
