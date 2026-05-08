@@ -1,3 +1,4 @@
+// Exportamos la interfaz RegisterDto que representa los datos necesarios para el proceso de registro de un nuevo usuario
 export interface RegisterDto {
     passwordEncrypt: string;
     nombre: string;

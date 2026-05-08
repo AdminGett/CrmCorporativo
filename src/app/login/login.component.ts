@@ -56,9 +56,11 @@ export class LoginComponent implements OnInit {
           return;
         } else {
           localStorage.removeItem('token');
+          this.router.navigate(['/']);
         }
       } catch (error) {
         localStorage.removeItem('token');
+        this.router.navigate(['/']);
       }
     }
   }

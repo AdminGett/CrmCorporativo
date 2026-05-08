@@ -10,39 +10,17 @@ const User = sequelize.define('User', {
         primaryKey: true,
         autoIncrement: true
     },
-    nombre: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    paterno: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    materno: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    correo: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: { isEmail: true }
-    },
-    contrasena: {
+    passwordEncrypt: {
         type: DataTypes.STRING,
         allowNull: false
     },
     tipoUsuario: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
-    nombreUsuario: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    fechaRegistro: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+    intentosLogueo: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
         allowNull: false
     },
     ultimaActividad: {
@@ -51,17 +29,17 @@ const User = sequelize.define('User', {
         allowNull: true
     },
     activo: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.INTEGER,
         defaultValue: true,
         allowNull: false
     },
     bloqueado: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.INTEGER,
         defaultValue: false,
         allowNull: false
     }
 }, {
-    tableName: 'Usuarios',
+    tableName: 'loginUsuarios',
     timestamps: false
 });
 export default User;

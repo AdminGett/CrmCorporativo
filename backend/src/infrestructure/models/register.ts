@@ -18,9 +18,8 @@ export interface IUserRegister {
     tipoUsuario: number;
     activo?: number;
 }
-
+// Para la creación, el ID y las fechas son opcionales porque los crea la BD
 export type UserCreationAttributes = Optional<IUserRegister, 'userId' | 'fechaRegistro' | 'activo'>;
-
 
 //  IUserAttributes da todo lo que debe tener la BD
 export class UserInstance extends Model<IUserRegister, UserCreationAttributes> implements IUserRegister {

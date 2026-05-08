@@ -16,6 +16,12 @@ export class deleteUsersComponent implements OnInit {
   filterValue: string = "";
   buscado: boolean = false;
 
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  totalPage: number = 0;
+  paginatedUsers: Register[] = [];
+  Math = Math;
+
   constructor(
     private readonly _deleteService: deleteService,
     private readonly toastr: ToastrService
@@ -24,6 +30,55 @@ export class deleteUsersComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUsers();
   }
+
+   calculateTotalPages(): void {
+    this.totalPage = Math.ceil(this.users.length / this.itemsPerPage);
+    this.updatePaginatedUsers();
+  }
+
+  updatePaginatedUsers(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedUsers = this.users.slice(startIndex, endIndex);
+  }
+
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPage) {
+      this.currentPage = page;
+      this.updatePaginatedUsers();
+    }
+  }
+    previousPage(): void {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updatePaginatedUsers();
+      }
+    }
+
+    nextPage(): void {
+      if (this.currentPage < this.totalPage) {
+        this.currentPage++;
+        this.updatePaginatedUsers();
+      }
+    }
+
+    getPageNumbers(): number[] {
+      const pages: number[] = [];
+      const maxPagesToShow = 5;
+      let startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
+      const endPage = Math.min(this.totalPage, startPage + maxPagesToShow - 1);
+
+      if (endPage - startPage < maxPagesToShow - 1) {
+        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      }
+
+      for(let i = startPage; i <= endPage; i++) {
+        pages.push(i);
+      }
+
+      return pages;
+    }
+
 
   fetchUsers(): void {
     this._deleteService.getAll().subscribe({
@@ -45,6 +100,9 @@ export class deleteUsersComponent implements OnInit {
         tipoUsuario: user.tipoUsuario,
         activo: user.activo
       }));
+
+      this,this.currentPage = 1;
+      this.calculateTotalPages();
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error al cargar usuarios:', error);
@@ -83,7 +141,6 @@ export class deleteUsersComponent implements OnInit {
     }
     this.buscado =  true;
 
-    console.log('Buscando usuario por nombre:', name);
 
     this._deleteService.searchByName(search).subscribe({
 
@@ -95,6 +152,8 @@ export class deleteUsersComponent implements OnInit {
           return;
         }
         this.users = data;
+         this,this.currentPage = 1;
+      this.calculateTotalPages();
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error al buscar usuarios:', error);
@@ -111,6 +170,7 @@ export class deleteUsersComponent implements OnInit {
     const textInputs = document.querySelectorAll('input[type="text"]');
     textInputs.forEach((input: any) => {
      this.filterValue= '';
+      this.fetchUsers();
     });
   }
 }
