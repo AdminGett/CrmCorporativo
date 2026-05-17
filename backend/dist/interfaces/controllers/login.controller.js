@@ -53,6 +53,7 @@ const loginUser = async (req, res) => {
         // Si las credenciales son válidas, se restablece el contador de intentos de inicio de sesión fallidos a 0 y se genera un token JWT que incluye el ID del usuario y su rol, con una expiración de 1 hora. Finalmente, se devuelve el token en la respuesta
         await login_1.default.update({
             intentosLogueo: 0,
+            ultimaActividad: new Date(),
         }, {
             where: { id: user.id }
         });

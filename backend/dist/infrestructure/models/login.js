@@ -35,6 +35,11 @@ const User = connection_1.default.define('User', {
         defaultValue: null,
         allowNull: true
     },
+    inicioActividad: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: null,
+        allowNull: true
+    },
     activo: {
         type: sequelize_1.DataTypes.INTEGER,
         defaultValue: 1,

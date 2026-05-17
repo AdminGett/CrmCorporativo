@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { userRegisterAltaComponent } from './user-register-alta/user-register-alta.component';
-import { deleteUsersComponent } from './user-register-baja/user-register-baja.component';
-import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
-import { UpdatePanelComponent } from './update-panel/update-panel.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
-import { ErrorAccesoComponent } from './error-acceso/error-acceso.component';
+import { LoginComponent } from './auth/login/login.component';
+import { HomeComponent } from './workload/home/home.component';
+import { userRegisterAltaComponent } from './users/user-register-alta/user-register-alta.component';
+import { deleteUsersComponent } from './users/user-register-baja/user-register-baja.component';
+import { updateUsersComponent } from './users/user-register-modificar/user-register-modificar.component';
+import { UpdatePanelComponent } from './users/update-panel/update-panel.component';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { PermissionPanelComponent } from './users/permission-panel/permission-panel.component';
+import { ErrorAccesoComponent } from './auth/error-acceso/error-acceso.component';
 import { AuthGuard } from './utilities/auth.guard';
 
 const routes: Routes = [
