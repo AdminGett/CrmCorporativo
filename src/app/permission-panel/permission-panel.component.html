@@ -1,5 +1,4 @@
 <app-navbar></app-navbar>
-
 <ion-content>
   <div class="p-6 space-y-6">
     <!-- Loading indicator -->
@@ -53,3 +52,24 @@
     </div>
   </div>
 </ion-content>
+=======
+<!-- <form *ngIf="editingUser" id="signupForm" class="space-y-4" (ngSubmit)="saveUser()" #form="ngForm"> -->
+<div class="p-6 space-y-6">
+  <form id="permissionFrom" class="space-y-4" #form="ngForm">
+    <div class="grid grid-cols-3 gap-4">
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700" for="activo">Activo</label>
+        <div class="relative   form-check form-switch">
+          <input type="checkbox" role="switch" id="activo" class="form-check-input" />
+        </div>
+      </div>
+      <div class="space-y-2">
+        <label class="text-sm font-medium text-gray-700" for="activo">Activo</label>
+        <div class="relative   form-check form-switch">
+          <input type="checkbox" role="switch" id="activo" class="form-check-input" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

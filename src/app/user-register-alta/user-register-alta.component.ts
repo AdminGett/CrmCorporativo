@@ -27,7 +27,6 @@ export class userRegisterAltaComponent implements OnInit {
   fechaRegistro: Date = new Date();
   tipoUsuario: number = 0;
   activo: number = 1;
-  userId: number = 0;
 
   adminOption: number = 3;
   loading: boolean = false;
@@ -39,8 +38,7 @@ export class userRegisterAltaComponent implements OnInit {
     private readonly _errorService: ErrorService
   ) { }
 
-  ngOnInit(): void { 
-  }
+  ngOnInit(): void { }
 
   showPassword = false;
 
@@ -79,19 +77,7 @@ export class userRegisterAltaComponent implements OnInit {
   }
 
     if (
-      this.nombre.trim() === '' ||
-      this.paterno.trim() === '' ||
-      this.materno.trim() === '' ||
-      this.fechaNacimiento === null ||
-      this.domicilio.trim() === '' ||
-      this.nss.trim() === '' ||
-      this.codigoPostal.trim() === '' ||
-      this.estado.trim() === '' ||
-      this.pais.trim() === '' ||
-      this.confirmPassword.trim() === '' ||
-      this.fechaRegistro === null ||
-      this.tipoUsuario === 0 ||
-      this.activo === 0
+      this.nombre.trim() === '' || this.paterno.trim() === '' || this.materno.trim() === '' || this.fechaNacimiento === null || this.domicilio.trim() === '' || this.nss.trim() === '' ||this.codigoPostal.trim() === '' ||this.estado.trim() === '' ||this.pais.trim() === '' ||this.confirmPassword.trim() === '' ||this.fechaRegistro === null ||this.tipoUsuario === 0 ||this.activo === 0
     ) {
       console.log('');
       this.toastr.error('Todos los campos son obligatorios', 'Error');
@@ -102,17 +88,13 @@ export class userRegisterAltaComponent implements OnInit {
       this.toastr.error('Las contraseñas ingresadas son distintas', 'Error');
       return;
     }
-
-
     if (this.adminOption === 1) {
       this.tipoUsuario = 1;
     } 
-
     this.loading = true;
-
     try {
       const user: Register = {
-        userId: this.userId, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
+        userId: 0, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
         passwordEncrypt: this.passwordEncrypt,
         nombre: this.nombre,
         paterno: this.paterno,

@@ -30,8 +30,6 @@ import { SoportePermissionsComponent } from './soporte-permissions/soporte-permi
 import { AnalisisPermissionsComponent } from './analisis-permissions/analisis-permissions.component';
 import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permissions.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +49,6 @@ import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permi
     SoportePermissionsComponent,
     AnalisisPermissionsComponent,
     UsuarioPermissionsComponent
-
   ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
     positionClass: 'toast-bottom-right',
