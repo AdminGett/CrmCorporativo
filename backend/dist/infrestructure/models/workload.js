@@ -19,10 +19,6 @@ const Workload = connection_1.default.define('workload', {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false
     },
-    adminId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
-    },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false

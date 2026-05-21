@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const comments_controller_1 = require("../../controllers/workload/comments.controller");
+const verifyToken_1 = require("../../middlewares/verifyToken");
+const router = (0, express_1.Router)();
+router.post('/newComment', comments_controller_1.newComment, verifyToken_1.verifyToken);
+router.put('/updateComment/:id', comments_controller_1.updateComment, verifyToken_1.verifyToken);
+router.delete('/deleteComment/:id', comments_controller_1.deleteComment, verifyToken_1.verifyToken);
+router.get('/getComments/:taskComment', comments_controller_1.getCommentsByTaskId, verifyToken_1.verifyToken);
+exports.default = router;

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const login_controller_1 = require("../controllers/login.controller");
+const login_controller_1 = require("../controllers/auth/login.controller");
 const validateUser_1 = require("../middlewares/validateUser");
 const router = (0, express_1.Router)();
 // Se define la ruta para el inicio de sesión de un usuario, que utiliza el middleware de validación para 

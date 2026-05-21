@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const update_controller_1 = require("../controllers/update.controller");
+const update_controller_1 = require("../controllers/users/update.controller");
 const adminAuth_1 = require("../middlewares/adminAuth");
 const router = (0, express_1.Router)();
 // Se definen las rutas para actualizar la información de un usuario específico y obtener la información de un usuario, 

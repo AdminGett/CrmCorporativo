@@ -1,8 +1,7 @@
 import * as dotenv from 'dotenv';
-import Server from "./infrestructure/server/server";
 
-
-// Configuramos dotenv
 dotenv.config();
+
+import Server from "./infrestructure/server/server";
 
 const server = new Server();
