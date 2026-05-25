@@ -32,10 +32,12 @@ let LoginComponent = class LoginComponent {
                 }
                 else {
                     localStorage.removeItem('token');
+                    this.router.navigate(['/']);
                 }
             }
             catch (error) {
                 localStorage.removeItem('token');
+                this.router.navigate(['/']);
             }
         }
     }

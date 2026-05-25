@@ -1,17 +1,13 @@
-import express from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { Application } from 'express';
-
 import loginRoutesUser from '../../interfaces/routes/login.routes';
-import registerRoutesUser from '../../interfaces/routes/register.routes';
-import userRouter from '../../interfaces/routes/delete.routes';
 import User from '../models/login';
-import updateUser from '../../interfaces/routes/update.routes';
-import nameRouter from '../../interfaces/routes/navbar.routes'
 import permissionsRouter from '../../interfaces/routes/permissions.routes'
-import workloadRouter from '../../interfaces/routes/workload.routes';
-
+import userRoutes from '../../interfaces/routes/user.routes';
+import componentWorkloadRouter from '../../interfaces/routes/comments.routes';
+import workloadComments from '../models/comments';
+import componentWorkload from '../models/workload';
 
 dotenv.config();
 
@@ -43,13 +39,13 @@ class Server {
         this.app.get('/api/status', (req, res) => {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
         });
-        this.app.use('/api/users', userRouter);
-        this.app.use('/api/users', updateUser);
-        this.app.use('/api/users', nameRouter);
-        this.app.use('/api/auth', loginRoutesUser);
-        this.app.use('/api/auth', registerRoutesUser);
+        // Prefijos limpios y únicos por entidad
+        this.app.use('/api/users', userRoutes);          // Todo lo relacionado con usuarios (Crear, Editar, Listar, Eliminar)
+        this.app.use('/api/auth', loginRoutesUser);       // Todo lo relacionado con Auth (Login y Registro)
         this.app.use('/api/permissions', permissionsRouter);
-        this.app.use('/api/workloads', workloadRouter);
+        this.app.use('/api/componentWorkload', componentWorkloadRouter);
+
+
     }
 
     // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
@@ -62,6 +58,8 @@ class Server {
     private async dbConnect() {
         try {
             await User.sync();
+            await componentWorkload.sync();
+            await workloadComments.sync();
             console.log('Base de datos conectada y sincronizada');
         } catch (error) {
             console.error('Error al conectar la base de datos:', error);

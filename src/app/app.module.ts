@@ -29,6 +29,7 @@ import { MarketingPermissionsComponent } from './marketing-permissions/marketing
 import { SoportePermissionsComponent } from './soporte-permissions/soporte-permissions.component';
 import { AnalisisPermissionsComponent } from './analisis-permissions/analisis-permissions.component';
 import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permissions.component';
+import { componentWorkloadComponent } from './component-workload/component-workload.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permi
     positionClass: 'toast-bottom-right',
     timeOut: 3000,
     preventDuplicates: true
-  }), CommonModule, FormsModule, HttpClientModule, BrowserAnimationsModule],
+  }), CommonModule, FormsModule, HttpClientModule, BrowserAnimationsModule, componentWorkloadComponent],  
   providers: [
     {
       provide: RouteReuseStrategy,

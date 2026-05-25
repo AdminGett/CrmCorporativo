@@ -1,0 +1,132 @@
+<div class="app-container">
+  <main class="main-content">
+    
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">Total Tareas</div>
+        <div class="stat-number">{{ totalTasks }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Pendientes</div>
+        <div class="stat-number">{{ pendingTasks }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">En Progreso</div>
+        <div class="stat-number">{{ progressTasks }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">Completadas</div>
+        <div class="stat-number">{{ completedTasks }}</div>
+      </div>
+    </section>
+
+    <div class="two-columns">
+      
+      <div class="section-card">
+        <div class="section-title">
+          <span>Mi Carga de Trabajo</span>
+        </div>
+
+        <div class="filters-bar">
+          <select class="filter-select" [(ngModel)]="statusFilter" (change)="aplicarFiltros()">
+            <option value="">Todos los estatus</option>
+            <option value="pending">Pendiente</option>
+            <option value="in_progress">En Progreso</option>
+            <option value="completed">Completada</option>
+          </select>
+
+          <select class="filter-select" [(ngModel)]="priorityFilter" (change)="aplicarFiltros()">
+            <option value="">Todas las prioridades</option>
+            <option value="low">Baja</option>
+            <option value="medium">Media</option>
+            <option value="high">Alta</option>
+          </select>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Título Tarea</th>
+                <th>Vencimiento</th>
+                <th>Estatus</th>
+                <th>Prioridad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of filteredTasksList">
+                <td>
+                  <span class="cursor-pointer" (click)="seleccionarTarea(task)">
+                    {{ task.title }}
+                  </span>
+                </td>
+                <td>{{ task.dateDue | date:'dd/MM/yyyy' }}</td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'badge-pending': task.statusTask === 'pending',
+                    'badge-progress': task.statusTask === 'in_progress',
+                    'badge-done': task.statusTask === 'completed'
+                  }">
+                    {{ task.statusTask }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'badge-low': task.priority === 'low',
+                    'badge-medium': task.priority === 'medium',
+                    'badge-high': task.priority === 'high'
+                  }">
+                    {{ task.priority }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="filteredTasksList.length === 0">
+                <td colspan="4" style="text-align: center; color: #7f8c8d; padding: 2rem 0;">
+                  No hay tareas registradas que cumplan los filtros.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-card" *ngIf="selectedTask">
+        <div class="section-title">
+          <span>Detalle de Tarea</span>
+          <button (click)="selectedTask = null">Cerrar</button>
+        </div>
+
+        <div class="detail-content">
+          <h4>{{ selectedTask.title }}</h4>
+          <p class="mt-3" style="font-size: 0.9rem; color: #475569;">
+            {{ selectedTask.descriptionTask }}
+          </p>
+        </div>
+
+        <div class="mt-3">
+          <h5>Comentarios de Seguimiento</h5>
+          <div class="separator-bar">••••</div>
+
+          <div style="max-height: 200px; overflow-y: auto; margin-bottom: 1rem;">
+            <div class="comment-item" *ngFor="let comment of commentsList">
+              <p>{{ comment.commentText }}</p>
+              <div class="comment-meta">
+                Por Colaborador ID: {{ comment.userComment }} • {{ comment.submittedAt | date:'shortTime' }}
+              </div>
+            </div>
+            <p *ngIf="commentsList.length === 0" style="font-size: 0.8rem; color: #94a3b8; text-align: center;">
+              No hay comentarios todavía en esta actividad.
+            </p>
+          </div>
+
+          <div class="form-row">
+            <label for="newComment">Escribir aportación:</label>
+            <textarea id="newComment" rows="2" [(ngModel)]="newCommentText" placeholder="Añade detalles del avance..."></textarea>
+          </div>
+          <button class="btn-primary" (click)="agregarComentario()">Publicar Comentario</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

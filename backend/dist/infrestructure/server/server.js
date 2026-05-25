@@ -7,13 +7,12 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const login_routes_1 = __importDefault(require("../../interfaces/routes/login.routes"));
-const register_routes_1 = __importDefault(require("../../interfaces/routes/register.routes"));
-const delete_routes_1 = __importDefault(require("../../interfaces/routes/delete.routes"));
 const login_1 = __importDefault(require("../models/login"));
-const update_routes_1 = __importDefault(require("../../interfaces/routes/update.routes"));
-const navbar_routes_1 = __importDefault(require("../../interfaces/routes/navbar.routes"));
 const permissions_routes_1 = __importDefault(require("../../interfaces/routes/permissions.routes"));
-const workload_routes_1 = __importDefault(require("../../interfaces/routes/workload.routes"));
+const user_routes_1 = __importDefault(require("../../interfaces/routes/user.routes"));
+const comments_routes_1 = __importDefault(require("../../interfaces/routes/comments.routes"));
+const comments_1 = __importDefault(require("../models/comments"));
+const workload_1 = __importDefault(require("../models/workload"));
 dotenv_1.default.config();
 // Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
@@ -38,13 +37,11 @@ class Server {
         this.app.get('/api/status', (req, res) => {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
         });
-        this.app.use('/api/users', delete_routes_1.default);
-        this.app.use('/api/users', update_routes_1.default);
-        this.app.use('/api/users', navbar_routes_1.default);
-        this.app.use('/api/auth', login_routes_1.default);
-        this.app.use('/api/auth', register_routes_1.default);
+        // Prefijos limpios y únicos por entidad
+        this.app.use('/api/users', user_routes_1.default); // Todo lo relacionado con usuarios (Crear, Editar, Listar, Eliminar)
+        this.app.use('/api/auth', login_routes_1.default); // Todo lo relacionado con Auth (Login y Registro)
         this.app.use('/api/permissions', permissions_routes_1.default);
-        this.app.use('/api/workloads', workload_routes_1.default);
+        this.app.use('/api/componentWorkload', comments_routes_1.default);
     }
     // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
     middlewares() {
@@ -55,6 +52,8 @@ class Server {
     async dbConnect() {
         try {
             await login_1.default.sync();
+            await workload_1.default.sync();
+            await comments_1.default.sync();
             console.log('Base de datos conectada y sincronizada');
         }
         catch (error) {

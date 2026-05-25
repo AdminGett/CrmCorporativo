@@ -1,7 +1,12 @@
 import { Router } from 'express';
-import { newTask } from '../controllers/workLoad.controller';
+import { getWorkloadByUser, filterWorkloadTasks, createWorkloadTask } from '../controllers/componentWorkload.controller';
+
 
 const router = Router();
 
-router.post('/newTask',  newTask);
+router.get( '/user/:userId', getWorkloadByUser );
+router.get( '/filter', filterWorkloadTasks );
+router.post( '/', createWorkloadTask );
+
+
 export default router;

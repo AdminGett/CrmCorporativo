@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const workLoad_controller_1 = require("../controllers/workLoad.controller");
+const componentWorkload_controller_1 = require("../controllers/componentWorkload.controller");
 const router = (0, express_1.Router)();
-router.post('/newTask', workLoad_controller_1.newTask);
+router.get('/user/:userId', componentWorkload_controller_1.getWorkloadByUser);
+router.get('/filter', componentWorkload_controller_1.filterWorkloadTasks);
+router.post('/', componentWorkload_controller_1.createWorkloadTask);
 exports.default = router;
