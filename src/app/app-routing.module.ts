@@ -10,6 +10,11 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { PermissionPanelComponent } from './users/permission-panel/permission-panel.component';
 import { ErrorAccesoComponent } from './auth/error-acceso/error-acceso.component';
 import { AuthGuard } from './utilities/auth.guard';
+import { EditTaskComponent } from './workload/edit-task/edit-task.component';
+import { NewTaskComponent } from './workload/new-task/new-task.component';
+import { TaskViewComponent } from './workload/task-view/task-view.component';
+import { componentWorkloadComponent } from './workload/component-workload/component-workload.component';
+
 
 const routes: Routes = [
   {
@@ -23,6 +28,10 @@ const routes: Routes = [
   },
   {
     path: 'Home',
+    component: HomeComponent
+  },
+  {
+    path:'Home/:id',
     component: HomeComponent
   },
   {
@@ -55,8 +64,25 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    component:ErrorAccesoComponent,
-    path:'accessDenied'
+    component: ErrorAccesoComponent,
+    path: 'accessDenied'
+  },
+  {
+    path: 'workload/getTask/:id',
+    component: EditTaskComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'workload/newTask',
+    component: NewTaskComponent,
+  },
+  {
+    path: 'taskView/:id',
+    component: TaskViewComponent
+  },
+  {
+    path: 'workload',
+    component: componentWorkloadComponent
   }
 ];
 

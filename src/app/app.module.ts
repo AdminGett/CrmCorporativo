@@ -30,6 +30,10 @@ import { SoportePermissionsComponent } from './users/soporte-permissions/soporte
 import { AnalisisPermissionsComponent } from './users/analisis-permissions/analisis-permissions.component';
 import { UsuarioPermissionsComponent } from './users/usuario-permissions/usuario-permissions.component';
 import { AddInterceptorRefresh } from './utilities/authRefresh.interceptor';
+import { EditTaskComponent } from './workload/edit-task/edit-task.component';
+import { NewTaskComponent } from './workload/new-task/new-task.component';
+import { TaskViewComponent } from './workload/task-view/task-view.component';
+import { componentWorkloadComponent } from './workload/component-workload/component-workload.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +53,11 @@ import { AddInterceptorRefresh } from './utilities/authRefresh.interceptor';
     MarketingPermissionsComponent,
     SoportePermissionsComponent,
     AnalisisPermissionsComponent,
-    UsuarioPermissionsComponent
+    UsuarioPermissionsComponent,
+    EditTaskComponent,
+    NewTaskComponent,
+    TaskViewComponent,
+    componentWorkloadComponent,
   ],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
     positionClass: 'toast-bottom-right',

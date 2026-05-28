@@ -19,6 +19,8 @@ const logout_routes_1 = __importDefault(require("../../interfaces/routes/auth/lo
 const refreshToken_routes_1 = __importDefault(require("../../interfaces/routes/auth/refreshToken.routes"));
 const workload_routes_1 = __importDefault(require("../../interfaces/routes/workload/workload.routes"));
 const comments_routes_1 = __importDefault(require("../../interfaces/routes/workload/comments.routes"));
+const commentsJess_routes_1 = __importDefault(require("../../interfaces/routes/workload/commentsJess.routes"));
+const workloadJess_routes_1 = __importDefault(require("../../interfaces/routes/workload/workloadJess.routes"));
 // Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
     // En el constructor se inicializa la aplicación, se configuran los middlewares, las rutas, la conexión a la base de datos y se inicia el servidor
@@ -56,6 +58,9 @@ class Server {
         // relacionadas con las tareas y sus comentarios dentro del sistema
         this.app.use('/api/workloads', workload_routes_1.default);
         this.app.use('/api/workloads', comments_routes_1.default);
+        this.app.use('/api/componentWorkload', workloadJess_routes_1.default);
+        this.app.use('/api/comments', commentsJess_routes_1.default);
+        this.app.use('/api/componentWorkload/comments', comments_routes_1.default);
     }
     // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
     middlewares() {

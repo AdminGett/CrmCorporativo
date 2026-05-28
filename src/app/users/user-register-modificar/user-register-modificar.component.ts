@@ -125,6 +125,9 @@ export class updateUsersComponent implements OnInit {
    this.router.navigate(['permissions', userId]);
   }
   
+  goToTask(userId:number):void {
+   this.router.navigate(['Home', userId]);
+  }
   
   findUserByName(name: string): void {
     const search = name.trim();

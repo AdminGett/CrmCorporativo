@@ -129,3 +129,25 @@ export const getCommentsByTaskId = async (req: Request, res: Response) => {
         return;
     }
 }
+
+export const getCommentsByUserId = async (req: Request, res: Response) => {
+    const { userComment } = req.params;
+
+    try {
+        const comments = await WorkloadComments.findAll({ 
+            where: { userComment },
+            order: [['submitedAt', 'DESC']] // ← más recientes primero
+        });
+
+        if (!comments.length) {
+            res.status(404).json({ message: 'No hay comentarios para este usuario' });
+            return;
+        }
+        res.json(comments);
+        return;
+    } catch (error) {
+        console.error('Error al obtener comentarios:', error);
+        res.status(500).json({ message: 'Error al obtener comentarios' });
+        return;
+    }
+}

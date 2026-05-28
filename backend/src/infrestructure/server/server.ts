@@ -21,6 +21,8 @@ import RefreshToken from '../../interfaces/routes/auth/refreshToken.routes';
 
 import workloadRouter from '../../interfaces/routes/workload/workload.routes';
 import commentsRouter from '../../interfaces/routes/workload/comments.routes';
+import commentsRouterJess from '../../interfaces/routes/workload/commentsJess.routes'
+import workloadRouterJess from '../../interfaces/routes/workload/workloadJess.routes'
 
 // Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
@@ -67,6 +69,10 @@ class Server {
         // relacionadas con las tareas y sus comentarios dentro del sistema
         this.app.use('/api/workloads', workloadRouter);
         this.app.use('/api/workloads', commentsRouter);
+
+        this.app.use('/api/componentWorkload', workloadRouterJess);
+        this.app.use('/api/comments', commentsRouterJess);
+        this.app.use( '/api/componentWorkload/comments', commentsRouter);
     }
 
     // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS

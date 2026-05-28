@@ -3,8 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTask = exports.changePriority = exports.changeState = exports.updateTask = exports.newTask = void 0;
-const workload_1 = __importDefault(require("../../../infrestructure/models/workload/workload"));
+exports.taskById = exports.showTasksByUserId = exports.deleteTask = exports.changePriority = exports.changeState = exports.updateTask = exports.newTask = void 0;
+const workloadJess_1 = __importDefault(require("../../../infrestructure/models/workload/workloadJess"));
 const express_validator_1 = require("express-validator");
 const newTask = async (req, res) => {
     // Validar los datos de entrada utilizando express-validator
@@ -15,6 +15,7 @@ const newTask = async (req, res) => {
     }
     // Se extraen los campos necesarios del cuerpo de la solicitud, que son requeridos para el proceso de registro de un nuevo usuario
     const { userAssignedId, title, descriptionTask, dateDue, submintedAt, statusTask, priority, } = req.body;
+    console.log(req.body); // Verificar los datos recibidos en el cuerpo de la solicitud
     // Validar campos obligatorios
     if (!userAssignedId ||
         !title ||
@@ -28,7 +29,7 @@ const newTask = async (req, res) => {
     }
     try {
         // Crear el usuario
-        const createTask = await workload_1.default.create({
+        const createTask = await workloadJess_1.default.create({
             userAssignedId,
             title,
             descriptionTask,
@@ -55,7 +56,7 @@ const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, descriptionTask, dateDue, submintedAt, statusTask, priority } = req.body;
     try {
-        const task = await workload_1.default.findByPk(id);
+        const task = await workloadJess_1.default.findByPk(id);
         if (!task) {
             res.status(404).json({ message: 'Tarea no encontrada' });
             return;
@@ -88,7 +89,7 @@ const changeState = async (req, res) => {
     const { id } = req.params;
     const { statusTask } = req.body;
     try {
-        const task = await workload_1.default.findByPk(id);
+        const task = await workloadJess_1.default.findByPk(id);
         if (!task) {
             res.status(404).json({ message: 'Tarea no encontrada' });
             return;
@@ -109,7 +110,7 @@ const changePriority = async (req, res) => {
     const { id } = req.params;
     const { priority } = req.body;
     try {
-        const task = await workload_1.default.findByPk(id);
+        const task = await workloadJess_1.default.findByPk(id);
         if (!task) {
             res.status(404).json({ message: 'Tarea no encontrada' });
             return;
@@ -131,7 +132,7 @@ exports.changePriority = changePriority;
 const deleteTask = async (req, res) => {
     const { id } = req.params;
     try {
-        const task = await workload_1.default.findByPk(id);
+        const task = await workloadJess_1.default.findByPk(id);
         if (!task) {
             res.status(404).json({ message: 'Tarea no encontrada' });
             return;
@@ -147,3 +148,39 @@ const deleteTask = async (req, res) => {
     }
 };
 exports.deleteTask = deleteTask;
+const showTasksByUserId = async (req, res) => {
+    const { userAssignedId } = req.params;
+    try {
+        const tasks = await workloadJess_1.default.findAll({ where: { userAssignedId } });
+        if (!tasks.length) {
+            res.status(404).json({ message: 'No se encontraron tareas para este usuario' });
+            return;
+        }
+        res.json(tasks);
+        return;
+    }
+    catch (error) {
+        console.error('Error al obtener tareas por ID de usuario:', error);
+        res.status(500).json({ message: 'Error al obtener tareas por ID de usuario' });
+        return;
+    }
+};
+exports.showTasksByUserId = showTasksByUserId;
+const taskById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const task = await workloadJess_1.default.findByPk(id);
+        if (!task) {
+            res.status(404).json({ message: 'Tarea no encontrada' });
+            return;
+        }
+        res.json(task);
+        return;
+    }
+    catch (error) {
+        console.error('Error al obtener tarea por ID:', error);
+        res.status(500).json({ message: 'Error al obtener tarea por ID' });
+        return;
+    }
+};
+exports.taskById = taskById;

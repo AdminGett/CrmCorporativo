@@ -18,7 +18,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class UpdatePanelComponent implements OnInit {
   users: Register[] = [];
   userId!: number;
-  editingUser:Register | null = null;
+  editingUser: Register | null = null;
    loading: boolean = false;
    tipoUsuario: number = 0;
 
@@ -32,8 +32,6 @@ export class UpdatePanelComponent implements OnInit {
 
   ngOnInit(): void{
     this.userId = Number(this.routes.snapshot.paramMap.get('userId'));
-    console.log('Id:', this.userId)
-
     if(this.userId){
       this.loadUser();
     }

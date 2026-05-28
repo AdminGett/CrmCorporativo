@@ -17,7 +17,13 @@ const WorkloadComments = connection_1.default.define('workloadComments', {
     },
     userComment: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'workload',
+            key: 'id'
+        },
+        onDelete: 'Cascade',
+        onUpdate: 'Cascade'
     },
     taskComment: {
         type: sequelize_1.DataTypes.INTEGER,

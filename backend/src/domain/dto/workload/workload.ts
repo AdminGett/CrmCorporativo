@@ -1,11 +1,11 @@
 export interface workLoad {
     id?: number;
-    userAssignedId?: number;
+    userAssignedId: number;
     title: string;
     descriptionTask: string;
-    dateDue: Date;
-    submintedAt: Date;
-    statusTask: 'pending' | 'in_progress' | 'completed';
+    dateDue: string;
+    submintedAt: string;
+    statusTask: 'pending' | 'in_progress' | 'completed' | 'canceled';
     priority: 'low' | 'medium' | 'high';
     createdAt?: Date;
     updatedAt?: Date;
