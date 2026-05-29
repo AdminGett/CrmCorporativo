@@ -5,19 +5,66 @@ let updateUsersComponent = class updateUsersComponent {
         this._deleteService = _deleteService;
         this.toastr = toastr;
         this.router = router;
+        // Variables para manejar el estado de autenticación y la información del usuario
         this.users = [];
         this.filterValue = "";
         this.buscado = false;
         this.showProfileMenu = false;
         this.openMenuUserId = null;
+        this.UserId = null;
+        // Variables para paginación
+        this.currentPage = 1;
+        this.itemsPerPage = 5;
+        this.totalPage = 0;
+        this.paginatedUsers = [];
+        this.Math = Math;
     }
     ngOnInit() {
         this.fetchUsers();
     }
+    calculateTotalPages() {
+        this.totalPage = Math.ceil(this.users.length / this.itemsPerPage);
+        this.updatePaginatedUsers();
+    }
+    updatePaginatedUsers() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.paginatedUsers = this.users.slice(startIndex, endIndex);
+    }
+    changePage(page) {
+        if (page >= 1 && page <= this.totalPage) {
+            this.currentPage = page;
+            this.updatePaginatedUsers();
+        }
+    }
+    previousPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.updatePaginatedUsers();
+        }
+    }
+    nextPage() {
+        if (this.currentPage < this.totalPage) {
+            this.currentPage++;
+            this.updatePaginatedUsers();
+        }
+    }
+    getPageNumbers() {
+        const pages = [];
+        const maxPagesToShow = 5;
+        let startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
+        const endPage = Math.min(this.totalPage, startPage + maxPagesToShow - 1);
+        if (endPage - startPage < maxPagesToShow - 1) {
+            startPage = Math.max(1, endPage - maxPagesToShow + 1);
+        }
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+        return pages;
+    }
     fetchUsers() {
         this._deleteService.getAll().subscribe({
             next: (data) => {
-                console.log('Usuarios recibidos:', data);
                 this.users = data.map(user => ({
                     userId: user.userId,
                     passwordEncrypt: user.passwordEncrypt,
@@ -34,6 +81,8 @@ let updateUsersComponent = class updateUsersComponent {
                     tipoUsuario: user.tipoUsuario,
                     activo: user.activo
                 }));
+                this, this.currentPage = 1;
+                this.calculateTotalPages();
             },
             error: (error) => {
                 console.error('Error al cargar usuarios:', error);
@@ -43,6 +92,9 @@ let updateUsersComponent = class updateUsersComponent {
     }
     goToUpdate(userId) {
         this.router.navigate(['/users/update/getUser', userId]);
+    }
+    goToPermissions(userId) {
+        this.router.navigate(['permissions', userId]);
     }
     findUserByName(name) {
         const search = name.trim();
@@ -65,6 +117,8 @@ let updateUsersComponent = class updateUsersComponent {
                     return;
                 }
                 this.users = data;
+                this, this.currentPage = 1;
+                this.calculateTotalPages();
             },
             error: (error) => {
                 console.error('Error al buscar usuarios:', error);
@@ -79,6 +133,7 @@ let updateUsersComponent = class updateUsersComponent {
         const textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach((input) => {
             this.filterValue = '';
+            this.fetchUsers();
         });
     }
     toggleProfileMenu(userId) {

@@ -1,14 +1,16 @@
 import { validationResult } from 'express-validator';
 import User from '../../infrestructure/models/register';
 import bcrypt from 'bcryptjs';
+// Controlador para manejar el proceso de registro de un nuevo usuario, validando los datos de entrada, hasheando la contraseña y creando un nuevo registro en la base de datos
 export const registerUser = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         res.status(400).json({ errors: errors.array() });
         return;
     }
+    // Se extraen los campos necesarios del cuerpo de la solicitud, que son requeridos para el proceso de registro de un nuevo usuario
     const { nombre, passwordEncrypt, paterno, materno, fechaNacimiento, domicilio, nss, codigoPostal, estado, pais, fechaRegistro, tipoUsuario, activo } = req.body;
-    // Validar campos obligatorios
+    // Validar campos obligatorios - activo ya tiene defaultValue: 1 en el modelo
     if (!nombre ||
         !passwordEncrypt ||
         !paterno ||
@@ -20,15 +22,14 @@ export const registerUser = async (req, res) => {
         !estado ||
         !pais ||
         !fechaRegistro ||
-        !tipoUsuario ||
-        !activo) {
+        !tipoUsuario) {
         res.status(400).json({ msg: "Todos los campos son obligatorios" });
         return;
     }
     try {
         // Hashear la contraseña
         const hashedPassword = await bcrypt.hash(passwordEncrypt, 10);
-        // Crear el usuario
+        // Crear el usuario - activo usará el defaultValue: 1 del modelo si no se proporciona
         const newUser = await User.create({
             nombre: nombre,
             passwordEncrypt: hashedPassword,
@@ -41,23 +42,10 @@ export const registerUser = async (req, res) => {
             estado: estado,
             pais: pais,
             tipoUsuario: tipoUsuario,
-            activo: 1
+            activo: activo !== undefined ? activo : 1 // Usar el valor enviado o default 1
         });
         res.status(201).json({
             msg: `Usuario ${nombre} creado exitosamente`,
-            user: {
-                nombre: newUser.get('nombre'),
-                paterno: newUser.get('paterno'),
-                materno: newUser.get('materno'),
-                fechaNacimiento: newUser.get('fechaNacimiento'),
-                domicilio: newUser.get('domicilio'),
-                nss: newUser.get('nss'),
-                codigoPostal: newUser.get('codigoPostal'),
-                estado: newUser.get('estado'),
-                pais: newUser.get('pais'),
-                fechaRegistro: newUser.get('fechaRegistro'),
-                tipoUsuario: newUser.get('tipoUsuario')
-            }
         });
     }
     catch (error) {

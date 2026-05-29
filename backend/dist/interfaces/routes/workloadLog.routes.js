@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const workload_logs_controller_1 = require("../controllers/workload-logs.controller");
+const router = (0, express_1.Router)();
+router.get('/', workload_logs_controller_1.getAllLogs);
+router.get('/workload/:workloadId', workload_logs_controller_1.getLogsByWorkload);
+router.get('/action/:action', workload_logs_controller_1.getLogsByAction);
+router.get('/user/:userId', workload_logs_controller_1.getLogsByUser);
+exports.default = router;

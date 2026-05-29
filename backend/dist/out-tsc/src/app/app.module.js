@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import { userRegisterAltaComponent } from './user-register-alta/user-register-alta.component';
 import { deleteUsersComponent } from './user-register-baja/user-register-baja.component';
-import { AddTokenInterceptor } from './core/utilities/addTokenInterceptor';
+import { AddTokenInterceptor } from '../app/utilities/add-token.interceptor';
 import { updateUsersComponent } from './user-register-modificar/user-register-modificar.component';
 import { UpdatePanelComponent } from './update-panel/update-panel.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -64,7 +64,8 @@ AppModule = __decorate([
                 provide: HTTP_INTERCEPTORS,
                 useClass: AddTokenInterceptor,
                 multi: true
-            }
+            },
+            { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
         ],
         bootstrap: [AppComponent],
     })

@@ -3,24 +3,31 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { Application } from 'express';
 
+// Rutas
 import loginRoutesUser from '../../interfaces/routes/login.routes';
 import registerRoutesUser from '../../interfaces/routes/register.routes';
-import userRouter from '../../interfaces/routes/delete.routes';
-import User from '../models/login';
+import usersRouter from '../../interfaces/routes/users.routes';
 import updateUser from '../../interfaces/routes/update.routes';
-import nameRouter from '../../interfaces/routes/navbar.routes'
-import permissionsRouter from '../../interfaces/routes/permissions.routes'
-import workloadRouter from '../../interfaces/routes/workload.routes';
+import nameRouter from '../../interfaces/routes/navbar.routes';
+import permissionsRouter from '../../interfaces/routes/permissions.routes';
+import workloadRouter from '../../interfaces/routes/workloads.routes';
+import workloadLogsRouter from '../../interfaces/routes/workloadLog.routes';
+import dashboardRouter from '../../interfaces/routes/dashboard.routes';
+import commentRouter from '../../interfaces/routes/comment.routes';
 
+
+// Modelos 
+import User from '../models/login';
+import Workload from '../../infrestructure/models/workloads';     
+import WorkloadLog from '../../infrestructure/models/workload_logs'; 
+import Comment from '../../infrestructure/models/comments';       
 
 dotenv.config();
 
-// Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
     private readonly app: Application;
     private readonly port: string;
 
-    // En el constructor se inicializa la aplicación, se configuran los middlewares, las rutas, la conexión a la base de datos y se inicia el servidor
     constructor() {
         this.app = express();
         this.port = process.env['PORT'] ?? '3000';
@@ -31,38 +38,54 @@ class Server {
         this.listen();
     }
 
-    // Método para iniciar el servidor y escuchar en el puerto configurado
     private listen() {
         this.app.listen(this.port, () => {
-            console.log(`Aplicación corriendo en el puerto ${this.port}`);
+            console.log(`✅ Servidor corriendo en el puerto ${this.port}`);
         });
     }
 
-    // Método para configurar las rutas de la aplicación, incluyendo rutas de autenticación, gestión de usuarios y permisos
     private routes() {
+        // Ruta de estado
         this.app.get('/api/status', (req, res) => {
-            res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
+            res.json({ 
+                ok: true, 
+                message: 'Backend activo y respondiendo correctamente',
+                timestamp: new Date().toISOString()
+            });
         });
-        this.app.use('/api/users', userRouter);
+
+        // Rutas
++
         this.app.use('/api/users', updateUser);
         this.app.use('/api/users', nameRouter);
         this.app.use('/api/auth', loginRoutesUser);
         this.app.use('/api/auth', registerRoutesUser);
         this.app.use('/api/permissions', permissionsRouter);
         this.app.use('/api/workloads', workloadRouter);
+        this.app.use('/api/users', usersRouter);
+        this.app.use('/api/workload-logs', workloadLogsRouter);
+        this.app.use('/api/dashboard', dashboardRouter);
+        this.app.use('/api/comments', commentRouter);
+
     }
 
-    // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
     private middlewares() {
         this.app.use(express.json());
         this.app.use(cors());
+        this.app.use((req, res, next) => {
+            console.log(`${req.method} ${req.url}`);
+            next();
+        });
     }
 
-    // Método para conectar a la base de datos y sincronizar los modelos definidos, asegurando que la estructura de la base de datos esté actualizada
     private async dbConnect() {
         try {
-            await User.sync();
-            console.log('Base de datos conectada y sincronizada');
+            await User.sync({ alter: true });
+            await Workload.sync({ alter: true });      
+            await WorkloadLog.sync({ alter: true });   
+            await Comment.sync({ alter: true });       
+            
+            console.log(' Base de datos conectada y todos los modeloss');
         } catch (error) {
             console.error('Error al conectar la base de datos:', error);
         }

@@ -10,6 +10,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
 import { ErrorAccesoComponent } from './error-acceso/error-acceso.component';
 import { AuthGuard } from './utilities/auth.guard';
+import { PanelAdminComponent } from 'backend/panel-admin/panel-admin.component';
 
 const routes: Routes = [
   {
@@ -57,7 +58,11 @@ const routes: Routes = [
   {
     component:ErrorAccesoComponent,
     path:'accessDenied'
-  }
+  },
+  {
+    component: PanelAdminComponent,
+    path: 'admin'
+  } 
 ];
 
 @NgModule({

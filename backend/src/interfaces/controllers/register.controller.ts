@@ -28,7 +28,7 @@ export const registerUser = async (req: Request, res: Response) => {
         activo
     } = req.body;
 
-    // Validar campos obligatorios
+    // Validar campos obligatorios - activo ya tiene defaultValue: 1 en el modelo
     if (
         !nombre ||
         !passwordEncrypt ||
@@ -41,19 +41,17 @@ export const registerUser = async (req: Request, res: Response) => {
         !estado ||
         !pais ||
         !fechaRegistro ||
-        !tipoUsuario ||
-        !activo
+        !tipoUsuario
     ) {
         res.status(400).json({ msg: "Todos los campos son obligatorios" });
         return;
     }
 
     try {
-
         // Hashear la contraseña
         const hashedPassword = await bcrypt.hash(passwordEncrypt, 10);
         
-        // Crear el usuario
+        // Crear el usuario - activo usará el defaultValue: 1 del modelo si no se proporciona
         const newUser = await User.create({
             nombre: nombre,
             passwordEncrypt: hashedPassword,
@@ -66,7 +64,7 @@ export const registerUser = async (req: Request, res: Response) => {
             estado: estado,
             pais: pais,
             tipoUsuario: tipoUsuario,
-            activo: 1
+            activo: activo !== undefined ? activo : 1 // Usar el valor enviado o default 1
         });
 
         res.status(201).json({

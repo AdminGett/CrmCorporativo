@@ -7,9 +7,54 @@ let deleteUsersComponent = class deleteUsersComponent {
         this.users = [];
         this.filterValue = "";
         this.buscado = false;
+        this.currentPage = 1;
+        this.itemsPerPage = 5;
+        this.totalPage = 0;
+        this.paginatedUsers = [];
+        this.Math = Math;
     }
     ngOnInit() {
         this.fetchUsers();
+    }
+    calculateTotalPages() {
+        this.totalPage = Math.ceil(this.users.length / this.itemsPerPage);
+        this.updatePaginatedUsers();
+    }
+    updatePaginatedUsers() {
+        const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        const endIndex = startIndex + this.itemsPerPage;
+        this.paginatedUsers = this.users.slice(startIndex, endIndex);
+    }
+    changePage(page) {
+        if (page >= 1 && page <= this.totalPage) {
+            this.currentPage = page;
+            this.updatePaginatedUsers();
+        }
+    }
+    previousPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+            this.updatePaginatedUsers();
+        }
+    }
+    nextPage() {
+        if (this.currentPage < this.totalPage) {
+            this.currentPage++;
+            this.updatePaginatedUsers();
+        }
+    }
+    getPageNumbers() {
+        const pages = [];
+        const maxPagesToShow = 5;
+        let startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
+        const endPage = Math.min(this.totalPage, startPage + maxPagesToShow - 1);
+        if (endPage - startPage < maxPagesToShow - 1) {
+            startPage = Math.max(1, endPage - maxPagesToShow + 1);
+        }
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+        return pages;
     }
     fetchUsers() {
         this._deleteService.getAll().subscribe({
@@ -31,6 +76,8 @@ let deleteUsersComponent = class deleteUsersComponent {
                     tipoUsuario: user.tipoUsuario,
                     activo: user.activo
                 }));
+                this, this.currentPage = 1;
+                this.calculateTotalPages();
             },
             error: (error) => {
                 console.error('Error al cargar usuarios:', error);
@@ -64,7 +111,6 @@ let deleteUsersComponent = class deleteUsersComponent {
             return;
         }
         this.buscado = true;
-        console.log('Buscando usuario por nombre:', name);
         this._deleteService.searchByName(search).subscribe({
             next: (data) => {
                 console.log('Usuarios encontrados:', data);
@@ -73,6 +119,8 @@ let deleteUsersComponent = class deleteUsersComponent {
                     return;
                 }
                 this.users = data;
+                this, this.currentPage = 1;
+                this.calculateTotalPages();
             },
             error: (error) => {
                 console.error('Error al buscar usuarios:', error);
@@ -87,6 +135,7 @@ let deleteUsersComponent = class deleteUsersComponent {
         const textInputs = document.querySelectorAll('input[type="text"]');
         textInputs.forEach((input) => {
             this.filterValue = '';
+            this.fetchUsers();
         });
     }
 };

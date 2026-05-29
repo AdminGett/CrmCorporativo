@@ -6,18 +6,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+// Rutas
 const login_routes_1 = __importDefault(require("../../interfaces/routes/login.routes"));
 const register_routes_1 = __importDefault(require("../../interfaces/routes/register.routes"));
-const delete_routes_1 = __importDefault(require("../../interfaces/routes/delete.routes"));
-const login_1 = __importDefault(require("../models/login"));
+const users_routes_1 = __importDefault(require("../../interfaces/routes/users.routes"));
 const update_routes_1 = __importDefault(require("../../interfaces/routes/update.routes"));
 const navbar_routes_1 = __importDefault(require("../../interfaces/routes/navbar.routes"));
 const permissions_routes_1 = __importDefault(require("../../interfaces/routes/permissions.routes"));
-const workload_routes_1 = __importDefault(require("../../interfaces/routes/workload.routes"));
+const workloads_routes_1 = __importDefault(require("../../interfaces/routes/workloads.routes"));
+const workloadLog_routes_1 = __importDefault(require("../../interfaces/routes/workloadLog.routes"));
+const dashboard_routes_1 = __importDefault(require("../../interfaces/routes/dashboard.routes"));
+const comment_routes_1 = __importDefault(require("../../interfaces/routes/comment.routes"));
+// Modelos 
+const login_1 = __importDefault(require("../models/login"));
+const workloads_1 = __importDefault(require("../../infrestructure/models/workloads"));
+const workload_logs_1 = __importDefault(require("../../infrestructure/models/workload_logs"));
+const comments_1 = __importDefault(require("../../infrestructure/models/comments"));
 dotenv_1.default.config();
-// Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
-    // En el constructor se inicializa la aplicación, se configuran los middlewares, las rutas, la conexión a la base de datos y se inicia el servidor
     constructor() {
         var _a;
         this.app = (0, express_1.default)();
@@ -27,35 +33,47 @@ class Server {
         this.dbConnect();
         this.listen();
     }
-    // Método para iniciar el servidor y escuchar en el puerto configurado
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Aplicación corriendo en el puerto ${this.port}`);
+            console.log(`✅ Servidor corriendo en el puerto ${this.port}`);
         });
     }
-    // Método para configurar las rutas de la aplicación, incluyendo rutas de autenticación, gestión de usuarios y permisos
     routes() {
+        // Ruta de estado
         this.app.get('/api/status', (req, res) => {
-            res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
+            res.json({
+                ok: true,
+                message: 'Backend activo y respondiendo correctamente',
+                timestamp: new Date().toISOString()
+            });
         });
-        this.app.use('/api/users', delete_routes_1.default);
-        this.app.use('/api/users', update_routes_1.default);
+        // Rutas
+        +this.app.use('/api/users', update_routes_1.default);
         this.app.use('/api/users', navbar_routes_1.default);
         this.app.use('/api/auth', login_routes_1.default);
         this.app.use('/api/auth', register_routes_1.default);
         this.app.use('/api/permissions', permissions_routes_1.default);
-        this.app.use('/api/workloads', workload_routes_1.default);
+        this.app.use('/api/workloads', workloads_routes_1.default);
+        this.app.use('/api/users', users_routes_1.default);
+        this.app.use('/api/workload-logs', workloadLog_routes_1.default);
+        this.app.use('/api/dashboard', dashboard_routes_1.default);
+        this.app.use('/api/comments', comment_routes_1.default);
     }
-    // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
     middlewares() {
         this.app.use(express_1.default.json());
         this.app.use((0, cors_1.default)());
+        this.app.use((req, res, next) => {
+            console.log(`${req.method} ${req.url}`);
+            next();
+        });
     }
-    // Método para conectar a la base de datos y sincronizar los modelos definidos, asegurando que la estructura de la base de datos esté actualizada
     async dbConnect() {
         try {
-            await login_1.default.sync();
-            console.log('Base de datos conectada y sincronizada');
+            await login_1.default.sync({ alter: true });
+            await workloads_1.default.sync({ alter: true });
+            await workload_logs_1.default.sync({ alter: true });
+            await comments_1.default.sync({ alter: true });
+            console.log(' Base de datos conectada y todos los modeloss');
         }
         catch (error) {
             console.error('Error al conectar la base de datos:', error);
