@@ -1,0 +1,270 @@
+<app-navbar></app-navbar>
+<div class="min-h-screen overflow-y-auto">
+  <div class="ml-64 px-6 py-8">
+    <h1 class="text-4xl font-semibold mb-6 text-gray-800">Tareas</h1>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 pb-6 pt-6">
+      <div class="bg-white rounded-2xl shadow p-6 border">
+        <h3 class="text-gray-500 text-sm">Total de tareas</h3>
+        <p class="text-3xl font-bold text-blue-600">{{workloadVariable.length}}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 border">
+        <h3 class="text-gray-500 text-sm">Tareas Pendientes</h3>
+        <p class="text-3xl font-bold text-yellow-600">{{getPendingTasks()}}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 border">
+        <h3 class="text-gray-500 text-sm">Tareas Completads</h3>
+        <p class="text-3xl font-bold text-green-600">{{getCompletedTasks()}}</p>
+      </div>
+      <div class="bg-white rounded-2xl shadow p-6 border">
+        <h3 class="text-gray-500 text-sm">Total de comentarios</h3>
+        <p class="text-3xl font-bold text-blue-600">{{commentVariable.length}}</p>
+      </div>
+    </div>
+    <div class="flex justify-end mr-6">
+      <button class="px-4 py-2 flex  bg-blue-600 border rounded-lg text-sm font-medium transition-colors
+                             disabled:opacity-50 disabled:cursor-not-allowed
+                             hover:bg-blue-700 text-white" (click)="goToTask()">Nueva tarea</button>
+    </div>
+
+    <div class="w-full pt-6">
+      <div class="bg-white rounded-xl card-shadow border-0">
+        <div class="p-6 grid grid-cols-2 gap-4">
+          <h2 class="text-2xl font-semibold mb-6 text-gray-800">Lista de Tareas Registradas</h2>
+          <div class="end-10 d-flex items-end justify-end me-5">
+            <div class="col-span-2 flex justify-end items-center space-x-2 ml-4">
+              <label class="text-sm text-gray-600">Mostrar:</label>
+              <select [(ngModel)]="itemsPerPage" (change)="calculateTotalPages()"
+                class="border rounded-lg px-3 py-1 text-sm bg-white">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              <span class="text-sm text-gray-600">registros</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="card-shadow rounded-2xl">
+          <div class="overflow-x-auto">
+            <table class="admin-table w-full">
+              <thead>
+                <tr>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">ID</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Titulo</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de vencimiento</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Descripción</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Estatus</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Prioridad</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de Creación</th>
+                  <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let task of paginatedTasks" class="border-t border-gray-100 hover:bg-gray-50">
+                  <!-- Tus columnas existentes... -->
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.id }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.title }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.dateDue }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.descriptionTask }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.statusTask }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.priority }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ task.submintedAt }}</td>
+                  <td class="px-6 py-4 text-center relative">
+                    <button (click)="toggleProfileMenu(task.id!)" class="px-3 py-1 border rounded hover:bg-gray-100">
+                      ⋮
+                    </button>
+
+                    <div *ngIf="openMenuTask === task.id" class="mt-2 w-48 bg-white border rounded shadow-lg">
+                      <button (click)="goToUpdate(task.id!)" class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        Modificar
+                      </button>
+                      <div *ngIf="openMenuTask == task.id">
+                        <button class="w-full text-left px-4 py-2 hover:bg-gray-100" (click)="confirmDelete(task.id!)">
+                          Eliminar
+                        </button>
+                      </div>
+                      <button (click)="goToView(task.id!)" class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        Ver mas
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Fila cuando no hay datos -->
+                <tr *ngIf="paginatedTasks.length === 0">
+                  <td colspan="13" class="px-6 py-8 text-center text-gray-500">
+                    No hay tareas para mostrar
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="taskToDelete !== null"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div class="bg-white rounded-2xl shadow-xl p-6 w-full max-w-sm mx-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Confirmar eliminacion</h3>
+            <p class="text-gray-600 text-sm mb-6">¿Estas seguro de que deeas eliminar esta tarea? Esta accion no se
+              puede deshacer.</p>
+            <div class="felx justify-end space-x-3">
+              <button (click)="cancelDelete()"
+                class="px-4 py-2 border rounded-lg text-sm font-medium hover:bg-gray-50 text-gray-700">
+                Cancelar
+              </button>
+              <button (click)="confirmDeleteTask()"
+                class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Controles de Paginación -->
+        <div class="px-6 py-4 border-t border-gray-200">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-700">
+              Mostrando <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+              a <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, workloadVariable.length) }}</span>
+              de <span class="font-medium">{{ workloadVariable.length }}</span> registros
+            </div>
+
+            <div class="flex space-x-2">
+              <button (click)="previousPage()" [disabled]="currentPage === 1" class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors
+                             disabled:opacity-50 disabled:cursor-not-allowed
+                             hover:bg-gray-50">
+                Anterior
+              </button>
+
+              <div class="flex space-x-1">
+                <button *ngFor="let page of getPageNumbers()" (click)="changePage(page)"
+                  [class.bg-blue-600]="currentPage === page" [class.text-white]="currentPage === page"
+                  [class.hover:bg-blue-700]="currentPage === page" class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors
+                               hover:bg-gray-50">
+                  {{ page }}
+                </button>
+              </div>
+
+              <button (click)="nextPage()" [disabled]="currentPage === totalPage" class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors
+                             disabled:opacity-50 disabled:cursor-not-allowed
+                             hover:bg-gray-50">
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ml-64 px-6 py-2">
+    <h1 class="text-4xl font-semibold mb-6 text-gray-800">Comentarios</h1>
+    <div class="w-full">
+      <div class="bg-white rounded-xl card-shadow border-0">
+        <div class="p-6 grid grid-cols-2 gap-4">
+          <h2 class="text-2xl font-semibold mb-6 text-gray-800">Lista de Comentarios Registradas</h2>
+
+          <div class="end-10 d-flex items-end justify-end me-5">
+            <div class="col-span-2 flex justify-end items-center space-x-2 ml-4">
+              <label class="text-sm text-gray-600">Mostrar:</label>
+              <select [(ngModel)]="itemsPerPage" (change)="calculateTotalPages()"
+                class="border rounded-lg px-3 py-1 text-sm bg-white">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+              <span class="text-sm text-gray-600">registros</span>
+            </div>
+          </div>
+
+
+          <p class="text-gray-600 text-sm col-span-2">Tus comentarios
+          </p>
+        </div>
+
+        <!-- Tabla -->
+        <div class="card-shadow rounded-2xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="admin-table w-full">
+              <thead>
+                <tr>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">ID</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Comentario</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Fecha de comentario</th>
+                  <th class="px-6 py-4 text-center text-sm font-semibold text-gray-700">Acciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let comment of paginatedComments" class="border-t border-gray-100 hover:bg-gray-50">
+                  <!-- Tus columnas existentes... -->
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ comment.id }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ comment.commentText }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ comment.submitedAt }}</td>
+                  <td class="px-6 py-4 text-center">
+                    <button (click)="toggleProfileMenuComment(comment.id!)"
+                      class="px-3 py-1 border rounded hover:bg-gray-100">
+                      ⋮
+                    </button>
+
+                    <div *ngIf="openMenuComment === comment.id"
+                      class="absolute  right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10">
+                      <button (click)="goToUpdate(comment.id!)" class="w-full text-left px-4 py-2 hover:bg-gray-100">
+                        Ver mas
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Fila cuando no hay datos -->
+                <tr *ngIf="paginatedComments.length === 0">
+                  <td colspan="13" class="px-6 py-8 text-center text-gray-500">
+                    No hay comentarios para mostrar
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Controles de Paginación -->
+        <div class="px-6 py-4 border-t border-gray-200">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-gray-700">
+              Mostrando <span class="font-medium">{{ (currentPageComments - 1) * itemsPerPageComments + 1 }}</span>
+              a <span class="font-medium">{{ Math.min(currentPageComments * itemsPerPageComments,
+                commentVariable.length) }}</span>
+              de <span class="font-medium">{{ commentVariable.length }}</span> registros
+            </div>
+
+            <div class="flex space-x-2">
+              <button (click)="previousPageComments()" [disabled]="currentPageComments === 1" class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors
+                             disabled:opacity-50 disabled:cursor-not-allowed
+                             hover:bg-gray-50">
+                Anterior
+              </button>
+
+              <div class="flex space-x-1">
+                <button *ngFor="let page of getPageNumbersComments()" (click)="changePageComments(page)"
+                  [class.bg-blue-600]="currentPageComments === page" [class.text-white]="currentPageComments === page"
+                  [class.hover:bg-blue-700]="currentPage === page" class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors
+                               hover:bg-gray-50">
+                  {{ page }}
+                </button>
+              </div>
+
+              <button (click)="nextPageComments()" [disabled]="currentPageComments === totalPageComments" class="px-4 py-2 border rounded-lg text-sm font-medium transition-colors
+                             disabled:opacity-50 disabled:cursor-not-allowed
+                             hover:bg-gray-50">
+                Siguiente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

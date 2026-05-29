@@ -1,0 +1,264 @@
+<app-navbar></app-navbar>
+<div class="dashboard-container md:ml-64">
+
+  <!-- STATS -->
+  <section class="stats-grid">
+
+    <div class="stat-card">
+      <span>Total Tareas</span>
+      <h2>{{ totalTasks }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <span>Pendientes</span>
+      <h2>{{ pendingTasks }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <span>En progreso</span>
+      <h2>{{ progressTasks }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <span>Completadas</span>
+      <h2>{{ completedTasks }}</h2>
+    </div>
+
+  </section>
+
+  <!-- ACTIONS -->
+  <section class="actions-bar">
+
+    <button class="btn-primary" (click)="obtenerTareas()">
+      Ver mis tareas
+    </button>
+
+    <button class="btn-secondary" (click)="aplicarFiltros()">
+      Filtrar
+    </button>
+
+    <button class="btn-secondary" (click)="mostrarComentariosUsuario()">
+      Mis comentarios
+    </button>
+
+  </section>
+
+  <!-- CONTENT -->
+  <section class="content-grid">
+
+    <!-- TASKS -->
+    <div class="card">
+
+      <div class="card-header">
+        <h3>Mi carga de trabajo</h3>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="filters-grid">
+
+        <input
+          type="text"
+          class="input"
+          placeholder="Buscar tarea..."
+          [(ngModel)]="searchTask"
+          (input)="aplicarFiltros()"
+        />
+
+        <select
+          class="input"
+          [(ngModel)]="statusFilter"
+          (change)="aplicarFiltros()"
+        >
+          <option value="">Todos los estatus</option>
+          <option value="pending">Pendiente</option>
+          <option value="in_progress">En progreso</option>
+          <option value="completed">Completada</option>
+        </select>
+
+        <select
+          class="input"
+          [(ngModel)]="priorityFilter"
+          (change)="aplicarFiltros()"
+        >
+          <option value="">Todas las prioridades</option>
+          <option value="low">Baja</option>
+          <option value="medium">Media</option>
+          <option value="high">Alta</option>
+        </select>
+
+      </div>
+
+      <!-- TABLA -->
+      <div class="table-container">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Vencimiento</th>
+              <th>Estatus</th>
+              <th>Prioridad</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr
+              *ngFor="let task of filteredTasksList"
+              (click)="seleccionarTarea(task)"
+              class="table-row"
+            >
+
+              <td>{{ task.title }}</td>
+
+              <td>
+                {{ task.dateDue | date:'dd/MM/yyyy' }}
+              </td>
+
+              <td>
+                <span class="badge"
+                  [ngClass]="{
+                    'badge-pending': task.statusTask === 'pending',
+                    'badge-progress': task.statusTask === 'in_progress',
+                    'badge-done': task.statusTask === 'completed'
+                  }"
+                >
+                  {{ task.statusTask }}
+                </span>
+              </td>
+
+              <td>
+                <span class="badge"
+                  [ngClass]="{
+                    'badge-low': task.priority === 'low',
+                    'badge-medium': task.priority === 'medium',
+                    'badge-high': task.priority === 'high'
+                  }"
+                >
+                  {{ task.priority }}
+                </span>
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <!-- DETALLE -->
+    <div class="card detail-card" *ngIf="selectedTask">
+
+      <div class="card-header">
+
+        <h3>{{ selectedTask.title }}</h3>
+
+        <button class="btn-close" (click)="selectedTask = null">
+          ✕
+        </button>
+
+      </div>
+
+      <p class="description">
+        {{ selectedTask.descriptionTask }}
+      </p>
+
+      <div class="task-info">
+
+        <p>
+          <strong>Fecha:</strong>
+          {{ selectedTask.dateDue | date:'dd/MM/yyyy' }}
+        </p>
+
+        <p>
+          <strong>Estatus:</strong>
+          {{ selectedTask.statusTask }}
+        </p>
+
+        <p>
+          <strong>Prioridad:</strong>
+          {{ selectedTask.priority }}
+        </p>
+
+      </div>
+
+      <!-- COMMENTS -->
+      <div class="comments-section">
+
+        <div class="comments-header">
+
+          <h4>Comentarios</h4>
+
+          <button
+            class="btn-secondary"
+            (click)="selectedTask && cargarComentarios(selectedTask.id!)"
+          >
+            Recargar
+          </button>
+
+        </div>
+
+        <input
+          type="text"
+          class="input"
+          placeholder="Buscar comentario..."
+          [(ngModel)]="searchComment"
+          (input)="buscarComentarios()"
+        />
+
+        <div class="comments-container">
+
+          <div
+            class="comment-item"
+            *ngFor="let comment of commentsList"
+          >
+
+            <p>{{ comment.commentText }}</p>
+
+            <small>
+              {{ comment.userComment }}
+              •
+              {{ comment.submintedAt | date:'short' }}
+            </small>
+
+          </div>
+
+        </div>
+
+        <!-- NUEVO -->
+        <textarea
+          rows="4"
+          class="textarea"
+          [(ngModel)]="newCommentText"
+          placeholder="Escribe un comentario..."
+        ></textarea>
+
+        <div class="comment-actions">
+
+          <button
+            class="btn-primary"
+            (click)="agregarComentario()"
+          >
+            Publicar
+          </button>
+
+          <button
+            class="btn-secondary"
+            (click)="newCommentText = ''"
+          >
+            Limpiar
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>

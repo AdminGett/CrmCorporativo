@@ -6,21 +6,21 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { ErrorService } from '../../services/error.service';
+import { ErrorService } from '../../services/auth/error.service';
 
 @Injectable()
 export class AddTokenInterceptor implements HttpInterceptor {
 
   constructor(
     private readonly router: Router,
-    private readonly _errorService: ErrorService
+    private readonly _errorService: ErrorService,
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
 
     if (token) {
       request = request.clone({
@@ -32,7 +32,7 @@ export class AddTokenInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
 
         if (error.status === 401) {
-          localStorage.removeItem('token');
+          localStorage.removeItem('accessToken');
           this.router.navigate(['/login']);
         }
 

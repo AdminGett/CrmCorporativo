@@ -8,5 +8,9 @@ export interface commentDTO {
 
     commentText: string;
 
+<<<<<<< HEAD
     submittedAt?: Date | string;
+=======
+    submintedAt?: Date | string;
+>>>>>>> origin/Student
 }

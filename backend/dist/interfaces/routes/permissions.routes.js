@@ -1,8 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+<<<<<<< HEAD
 const permissions_controller_1 = require("../controllers/permissions.controller");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
+=======
+const permissions_controller_1 = require("../controllers/users/permissions.controller");
+const auth_1 = require("../middlewares/auth");
+>>>>>>> origin/Student
 const router = (0, express_1.Router)();
 //
 router.put('/:userId', auth_middleware_1.verifyToken, permissions_controller_1.updatePermissions);

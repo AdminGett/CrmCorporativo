@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ):boolean {
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     
 
     if (!token) {
@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate {
       if (decoded.exp < currentTime) {
         // Token expirado, limpiar localStorage y redirigir
         console.warn('Token expirado, redirigiendo al login');
-        localStorage.removeItem('token');
+        localStorage.removeItem('accessToken');
         this.router.navigate(['/login']);
         return false;
 
@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate {
     } catch (error) {
       // Token inválido o malformado
       console.error('Token inválido:', error);
-      localStorage.removeItem('token');
+      localStorage.removeItem('accessToken');
       this.router.navigate(['/login']);
       return false;
     }
@@ -62,3 +62,4 @@ export class AuthGuard implements CanActivate {
     
   }
 }
+

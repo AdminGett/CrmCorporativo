@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const workloadComments_controller_1 = require("../../controllers/workload/workloadComments.controller");
+const router = (0, express_1.Router)();
+router.get('/task/:taskId', workloadComments_controller_1.getCommentsByTask);
+router.get('/user/:userId', workloadComments_controller_1.getCommentsByUser);
+router.get('/filter', workloadComments_controller_1.filterComments);
+router.post('/', workloadComments_controller_1.createComment);
+exports.default = router;
