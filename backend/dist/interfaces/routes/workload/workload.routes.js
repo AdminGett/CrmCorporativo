@@ -8,4 +8,6 @@ router.put('/updateTask/:id', workLoad_controller_1.updateTask);
 router.delete('/deleteTask/:id', workLoad_controller_1.deleteTask);
 router.put('/changeStatus/:id', workLoad_controller_1.changeState);
 router.put('/changePriority/:id', workLoad_controller_1.changePriority);
+router.get('/getTasks/:userAssignedId', workLoad_controller_1.showTasksByUserId);
+router.get('/getTask/:id', workLoad_controller_1.taskById);
 exports.default = router;

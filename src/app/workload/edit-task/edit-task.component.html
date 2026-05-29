@@ -1,0 +1,86 @@
+<app-navbar></app-navbar>
+<div id="newTaskForm" class="container mx-auto px-4 py-8 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-6xl">
+    <div class="container mx-auto px-4 py-8 max-w-md md:max-w-lg lg:max-w-xl xl:max-w-6xl">
+      <div class="bg-white rounded-xl card-shadow border-0">
+        <!-- Header -->
+        <div class="text-center p-6 pb-2">
+          <h1 class="text-2xl font-bold mb-2">Editar tarea</h1>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <form id="taskForm" class="space-y-4" (ngSubmit)="editTask()" #form="ngForm"  *ngIf="task">
+            <div class="">
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700 " for="title">Titulo</label>
+                <div class="relative">
+                  <input [(ngModel)]="task.title" name="title" type="text" id="title" placeholder="Titulo" autocomplete="titulo"
+                    class="custom-input w-full pl-10 h-12 border border-gray-200 rounded-lg" required />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700" for="descriptionTask">Descripcion</label>
+                <div class="relative">
+                  <input [(ngModel)]="task.descriptionTask" name="descriptionTask" type="text" id="descriptionTask" placeholder="Descripcion"
+                    autocomplete="descripcion" class="custom-input w-full pl-10 h-12 border border-gray-200 rounded-lg"
+                    required />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700" for="dueDate">Fecha de
+                  vencimento</label>
+                <div class="relative">
+                  <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z pointer-events-none" />
+                  </svg>
+                  <input [(ngModel)]="task.dateDue" (click)="showDatePicker($event)" name="dueDate" type="datetime-local" id="dueDate" autocomplete="dueDate"
+                    placeholder="Fecha de vencimento de la tarea"
+                    class="custom-input w-full pl-10 h-12 border border-gray-200 rounded-lg" required />
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700" for="status">Estado</label>
+                <div class="dropdown">
+                  <select [(ngModel)]="task.statusTask" name="statusTask" class="custom-input w-full h-12 border rounded-lg">
+                    <option [ngValue]="0"  selected>Selecciona un estado:</option>
+                    <option [ngValue]="1">Pendiente</option>
+                    <option [ngValue]="2">En progreso</option>
+                    <option [ngValue]="3">Completada</option>
+                    <option [ngValue]="4">Cancelada</option>
+                  </select>
+                  <div class="mt-2">
+                    <p>Estado seleccionado:</p>
+                    <p *ngIf="task.statusTask">{{task.statusTask}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <label class="text-sm font-medium text-gray-700" for="priority">Prioridad</label>
+                <div class="relative">
+                  <div class="dropdown">
+                    <select [(ngModel)]="task.priority" name="priority" class="custom-input w-full h-12 border rounded-lg">
+                      <option [ngValue]="0" selected>Nivel de prioridad:</option>
+                      <option [ngValue]="1">Alta</option>
+                      <option [ngValue]="2">Media</option>
+                      <option [ngValue]="3">Baja</option>
+                    </select>
+                    <div class="mt-2">
+                      <p>Nivel de prioridad seleccionado:</p>
+                      <p *ngIf="task.priority">{{ task.priority }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary w-full h-12 text-white font-medium rounded-lg">
+              <span class="flex items-center justify-center">
+              </span>
+              <span>Editar tarea</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

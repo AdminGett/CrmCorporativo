@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Workload from "../../../infrestructure/models/workload/workload"
+import Workload from "../../../infrestructure/models/workload/workloadJess"
 import { validationResult } from 'express-validator';
 
 export const newTask = async (req: Request, res: Response) => {
@@ -20,6 +20,8 @@ export const newTask = async (req: Request, res: Response) => {
         statusTask,
         priority,
     } = req.body;
+
+    console.log(req.body); // Verificar los datos recibidos en el cuerpo de la solicitud
 
     // Validar campos obligatorios
     if (
@@ -157,6 +159,41 @@ export const deleteTask = async (req: Request, res: Response) => {
     } catch (error) {
         console.error('Error al eliminar tarea:', error);
         res.status(500).json({ message: 'Error al eliminar tarea' });
+        return;
+    }
+};
+
+export const showTasksByUserId = async (req: Request, res: Response) => {
+    const { userAssignedId } = req.params;
+    try {
+        const tasks = await Workload.findAll({ where: { userAssignedId } });
+        if (!tasks.length) {
+            res.status(404).json({ message: 'No se encontraron tareas para este usuario' });
+            return;
+        }
+        res.json(tasks);
+        return;
+    }
+        catch (error) {
+        console.error('Error al obtener tareas por ID de usuario:', error);
+        res.status(500).json({ message: 'Error al obtener tareas por ID de usuario' });
+        return;
+    }
+};
+
+export const taskById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const task = await Workload.findByPk(id);
+        if (!task) {
+            res.status(404).json({ message: 'Tarea no encontrada' });
+            return;
+        }
+        res.json(task);
+        return;
+    } catch (error) {
+        console.error('Error al obtener tarea por ID:', error);
+        res.status(500).json({ message: 'Error al obtener tarea por ID' });
         return;
     }
 };

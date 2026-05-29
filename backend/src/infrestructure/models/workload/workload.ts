@@ -8,8 +8,8 @@ export interface Workload {
     userAssignedId: number;
     title: string;
     descriptionTask: string;
-    dateDue: Date;
-    submintedAt: Date;
+    dateDue: string;
+    submintedAt: string;
     statusTask: 'pending' | 'in_progress' | 'completed';
     priority: 'low' | 'medium' | 'high';
     createdAt?: Date;
@@ -17,7 +17,7 @@ export interface Workload {
 }
 
 // extiende de Optional para permitir que ciertos campos sean opcionales al crear una nueva instancia de Workload
-export type workloadAttributes = Optional<workLoad,  'id' | 'createdAt' | 'updatedAt' | 'userAssignedId'>;
+export type workloadAttributes = Optional<workLoad,  'id' | 'createdAt' | 'updatedAt'>;
 
 // Clase WorkloadInstance que extiende de Model para representar una instancia de la tabla workload en la base de datos
 export class WorkloadInstance extends Model<Workload, workloadAttributes> implements Workload {
@@ -25,8 +25,8 @@ export class WorkloadInstance extends Model<Workload, workloadAttributes> implem
     public userAssignedId!: number;
     public title!: string;
     public descriptionTask!: string;
-    public dateDue!: Date;
-    public submintedAt!: Date;
+    public dateDue!: string;
+    public submintedAt!: string;
     public statusTask!: 'pending' | 'in_progress' | 'completed';
     public priority!: 'low' | 'medium' | 'high';
     public createdAt!: Date;
