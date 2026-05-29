@@ -5,6 +5,7 @@ let NavbarComponent = class NavbarComponent {
     constructor(router, userService) {
         this.router = router;
         this.userService = userService;
+        // Variables para manejar el estado de autenticación y la información del usuario
         this.isLoggedIn = false;
         this.showProfileMenu = false;
         this.userName = 'Usuario';
@@ -12,6 +13,7 @@ let NavbarComponent = class NavbarComponent {
         this.userRole = null;
         this.userId = null;
     }
+    // Método de inicialización del componente
     ngOnInit() {
         this.checkAuthStatus();
         // Para cambios en el localStorage
@@ -21,8 +23,10 @@ let NavbarComponent = class NavbarComponent {
             }
         });
     }
+    // Método para verificar el estado de autenticación del usuario
     checkAuthStatus() {
         const token = localStorage.getItem('token');
+        // Si existe un token, intentar decodificarlo y verificar su validez
         if (token) {
             try {
                 const decoded = jwtDecode(token);
@@ -32,7 +36,7 @@ let NavbarComponent = class NavbarComponent {
                     this.isLoggedIn = true;
                     this.userInfo = decoded;
                     this.userId = decoded.userId;
-                    console.log(this.userInfo);
+                    // Obtener el nombre y rol del usuario utilizando su ID
                     if (this.userId !== null) {
                         this.userService.getUserName(decoded.userId).subscribe({
                             next: (res) => {
@@ -44,7 +48,6 @@ let NavbarComponent = class NavbarComponent {
                             }
                         });
                     }
-                    console.log(this.userInfo);
                 }
                 else {
                     // Por si el token expira
@@ -58,15 +61,18 @@ let NavbarComponent = class NavbarComponent {
             }
         }
         else {
+            // Si no hay token, el usuario no está autenticado
             this.isLoggedIn = false;
             this.userName = 'Usuario';
             this.userInfo = null;
             this.userRole = null;
         }
     }
+    // Método para alternar la visibilidad del menú de perfil
     toggleProfileMenu() {
         this.showProfileMenu = !this.showProfileMenu;
     }
+    // Método para cerrar sesión, eliminando el token del localStorage y restableciendo el estado del componente
     logout() {
         localStorage.removeItem('token');
         this.isLoggedIn = false;
@@ -79,6 +85,7 @@ let NavbarComponent = class NavbarComponent {
     closeProfileMenu() {
         this.showProfileMenu = false;
     }
+    // Método para redirigir al perfil del usuarioS
     goToProfile(userId) {
         this.router.navigate(['/userProfile', userId]);
     }

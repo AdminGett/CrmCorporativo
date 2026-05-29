@@ -10,6 +10,7 @@ let UpdatePanelComponent = class UpdatePanelComponent {
         this.users = [];
         this.editingUser = null;
         this.loading = false;
+        this.tipoUsuario = 0;
         this.showPassword = false;
     }
     ngOnInit() {
@@ -32,6 +33,18 @@ let UpdatePanelComponent = class UpdatePanelComponent {
                 console.error(err);
             }
         });
+    }
+    getNombrePuesto(tipo) {
+        const puestos = {
+            1: 'Administrador',
+            2: 'Gerente',
+            3: 'Ejecutivo de ventas',
+            4: 'Marketing',
+            5: 'Servicio al cliente',
+            6: 'Analista',
+            7: 'Usuario'
+        };
+        return puestos[tipo] || 'Desconocido';
     }
     saveUser() {
         if (!this.editingUser)

@@ -30,12 +30,12 @@ const User = sequelize.define('User', {
     },
     activo: {
         type: DataTypes.INTEGER,
-        defaultValue: true,
+        defaultValue: 1,
         allowNull: false
     },
     bloqueado: {
         type: DataTypes.INTEGER,
-        defaultValue: false,
+        defaultValue: 0,
         allowNull: false
     }
 }, {

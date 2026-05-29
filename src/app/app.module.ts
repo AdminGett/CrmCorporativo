@@ -29,7 +29,8 @@ import { MarketingPermissionsComponent } from './marketing-permissions/marketing
 import { SoportePermissionsComponent } from './soporte-permissions/soporte-permissions.component';
 import { AnalisisPermissionsComponent } from './analisis-permissions/analisis-permissions.component';
 import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permissions.component';
-
+import { UserTaskComponent } from './user-task/user-task.component';
+import { UserCommentComponent } from './user-comment/user-comment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,9 +49,11 @@ import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permi
     MarketingPermissionsComponent,
     SoportePermissionsComponent,
     AnalisisPermissionsComponent,
-    UsuarioPermissionsComponent
+    UsuarioPermissionsComponent,
+    UserCommentComponent,
   ],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule, ToastrModule.forRoot({
+  //CommonModule (Cuauh)
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, RouterModule,CommonModule,FormsModule, ToastrModule.forRoot({
     positionClass: 'toast-bottom-right',
     timeOut: 3000,
     preventDuplicates: true
@@ -67,5 +70,6 @@ import { UsuarioPermissionsComponent } from './usuario-permissions/usuario-permi
     },
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }],
   bootstrap: [AppComponent],
+
 })
 export class AppModule { }

@@ -10,6 +10,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { PermissionPanelComponent } from './permission-panel/permission-panel.component';
 import { ErrorAccesoComponent } from './error-acceso/error-acceso.component';
 import { AuthGuard } from './utilities/auth.guard';
+import { UserCommentComponent } from './user-comment/user-comment.component';
+import { UserTaskComponent } from './user-task/user-task.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,14 @@ const routes: Routes = [
   {
     component:ErrorAccesoComponent,
     path:'accessDenied'
+  },
+  {
+    component: UserTaskComponent,
+    path: 'userTasks'
+  },
+  {
+    component: UserCommentComponent,
+    path: 'userTasks/:workloadId/comments'
   }
 ];
 

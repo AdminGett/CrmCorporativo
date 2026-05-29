@@ -2,25 +2,22 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { Application } from 'express';
-
+import userWorkRoutes from '../../interfaces/routes/userwork.routes';
 import loginRoutesUser from '../../interfaces/routes/login.routes';
 import registerRoutesUser from '../../interfaces/routes/register.routes';
 import userRouter from '../../interfaces/routes/delete.routes';
 import User from '../models/login';
 import updateUser from '../../interfaces/routes/update.routes';
-import nameRouter from '../../interfaces/routes/navbar.routes'
-import permissionsRouter from '../../interfaces/routes/permissions.routes'
-import workloadRouter from '../../interfaces/routes/workload.routes';
-
+import nameRouter from '../../interfaces/routes/navbar.routes';
+import permissionsRouter from '../../interfaces/routes/permissions.routes';
+import commentRoutes from '../../interfaces/routes/usercomment.routes';
 
 dotenv.config();
 
-// Clase principal del servidor que configura y levanta la aplicación Express
 class Server {
     private readonly app: Application;
     private readonly port: string;
 
-    // En el constructor se inicializa la aplicación, se configuran los middlewares, las rutas, la conexión a la base de datos y se inicia el servidor
     constructor() {
         this.app = express();
         this.port = process.env['PORT'] ?? '3000';
@@ -31,14 +28,12 @@ class Server {
         this.listen();
     }
 
-    // Método para iniciar el servidor y escuchar en el puerto configurado
     private listen() {
         this.app.listen(this.port, () => {
             console.log(`Aplicación corriendo en el puerto ${this.port}`);
         });
     }
 
-    // Método para configurar las rutas de la aplicación, incluyendo rutas de autenticación, gestión de usuarios y permisos
     private routes() {
         this.app.get('/api/status', (req, res) => {
             res.json({ message: 'Backend activo y respondiendo al frontend correctamente' });
@@ -49,16 +44,17 @@ class Server {
         this.app.use('/api/auth', loginRoutesUser);
         this.app.use('/api/auth', registerRoutesUser);
         this.app.use('/api/permissions', permissionsRouter);
-        this.app.use('/api/workloads', workloadRouter);
+        this.app.use('/api/userworks', userWorkRoutes);
+        this.app.use('/api/comments', commentRoutes);
+
+       
     }
 
-    // Método para configurar los middlewares de la aplicación, incluyendo el middleware para parsear JSON y habilitar CORS
     private middlewares() {
         this.app.use(express.json());
         this.app.use(cors());
     }
 
-    // Método para conectar a la base de datos y sincronizar los modelos definidos, asegurando que la estructura de la base de datos esté actualizada
     private async dbConnect() {
         try {
             await User.sync();

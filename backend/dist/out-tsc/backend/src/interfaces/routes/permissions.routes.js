@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { getInfoUser, updatePermissions } from '../controllers/permissions.controller';
+import { getInfoUser, getUserByIDd, updatePermissions } from '../controllers/permissions.controller';
 import { verifyToken } from '../middlewares/auth';
 const router = Router();
-router.put('/permissions/:userId', verifyToken, updatePermissions);
-router.get('/permissions/getUser/:userId', verifyToken, getInfoUser);
+//
+router.put('/:userId', verifyToken, updatePermissions);
+router.get('/getUser/:userId', verifyToken, getInfoUser);
+router.get('/getUserById/:userId', verifyToken, getUserByIDd);
 export default router;
 //# sourceMappingURL=permissions.routes.js.map

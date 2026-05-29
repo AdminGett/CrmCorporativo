@@ -1,0 +1,82 @@
+<ion-content>
+  <div class="d-flex" style="min-height:100vh; background:#f4f7f9;">
+    <!-- todo el contenido -->
+  </div>
+</ion-content>
+<div class="d-flex" style="min-height:100vh; background:#f4f7f9;">
+
+  <!-- SIDEBAR -->
+  <aside style="width:260px; min-height:100vh; background:#fff; border-right:1px solid #e2e8f0; position:fixed; top:0; left:0; display:flex; flex-direction:column; padding:1.5rem 1.25rem; z-index:200;">
+    <h4 style="font-weight:800; color:#0f3b5e; margin-bottom:2rem;">WorkCtrl</h4>
+    <nav style="display:flex; flex-direction:column; gap:0.25rem;">
+      <a href="javascript:void(0)" (click)="regresar()" style="display:flex; align-items:center; gap:0.6rem; padding:0.65rem 1rem; border-radius:10px; text-decoration:none; color:#475569; font-weight:500; font-size:0.9rem;">
+        <i class="bi bi-arrow-left"></i> Volver a Tareas
+      </a>
+      <a href="javascript:void(0)" style="display:flex; align-items:center; gap:0.6rem; padding:0.65rem 1rem; border-radius:10px; text-decoration:none; color:#1e3a8a; font-weight:600; font-size:0.9rem; background:#e0e7ff;">
+        <i class="bi bi-chat-left-text"></i> Comentarios
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN -->
+  <main style="margin-left:260px; padding:2rem 2.25rem; width:100%;">
+
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <button (click)="regresar()" style="border:none; background:transparent; cursor:pointer; color:#64748b; font-size:1.1rem;">
+        <i class="bi bi-arrow-left-circle"></i>
+      </button>
+      <div>
+        <h2 style="font-weight:700; font-size:1.4rem; color:#1e293b; margin:0;">Comentarios</h2>
+        <p style="color:#64748b; font-size:0.85rem; margin:0;">Tarea ID: {{ workloadId }}</p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- Lista de comentarios -->
+      <div class="col-lg-8">
+        <div style="background:#fff; border-radius:16px; border:1px solid #eef2f8; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:1.5rem;">
+          <h5 style="font-weight:700; font-size:1rem; margin-bottom:1.25rem;">Historial</h5>
+
+          <div *ngIf="cargando" style="text-align:center; padding:2rem; color:#64748b;">
+            Cargando comentarios...
+          </div>
+
+          <div *ngIf="!cargando && comentarios.length === 0" style="text-align:center; padding:2rem; color:#64748b;">
+            No hay comentarios aun.
+          </div>
+
+          <div *ngFor="let c of comentarios" style="background:#f8fafc; border-left:3px solid #0f3b5e; border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.75rem;">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span style="font-size:0.8rem; font-weight:600; color:#0f3b5e;">Usuario {{ c.user_id }}</span>
+              <span style="font-size:0.72rem; color:#94a3b8;">{{ formatDate(c.created_at) }}</span>
+            </div>
+            <p style="font-size:0.88rem; color:#334155; margin:0;">{{ c.content }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agregar comentario -->
+      <div class="col-lg-4">
+        <div style="background:#fff; border-radius:16px; border:1px solid #eef2f8; box-shadow:0 2px 8px rgba(0,0,0,0.04); padding:1.5rem;">
+          <h6 style="font-weight:700; font-size:0.9rem; margin-bottom:1rem;">Agregar comentario</h6>
+
+          <textarea
+            [(ngModel)]="nuevoComentario"
+            rows="4"
+            placeholder="Escribe tu comentario..."
+            style="width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:0.75rem; font-size:0.85rem; color:#334155; resize:none; outline:none; background:#f8fafc;">
+          </textarea>
+
+          <button
+            (click)="enviarComentario()"
+            [disabled]="enviando || !nuevoComentario.trim()"
+            style="width:100%; margin-top:0.75rem; border-radius:8px; font-size:0.85rem; font-weight:600; padding:0.6rem; border:none; cursor:pointer; background:#0f3b5e; color:#fff;">
+            {{ enviando ? 'Enviando...' : 'Guardar comentario' }}
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>

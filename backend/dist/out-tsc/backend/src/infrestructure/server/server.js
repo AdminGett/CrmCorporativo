@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import userWorkRoutes from '../../interfaces/routes/userwork.routes';
 import loginRoutesUser from '../../interfaces/routes/login.routes';
 import registerRoutesUser from '../../interfaces/routes/register.routes';
 import userRouter from '../../interfaces/routes/delete.routes';
@@ -8,6 +9,7 @@ import User from '../models/login';
 import updateUser from '../../interfaces/routes/update.routes';
 import nameRouter from '../../interfaces/routes/navbar.routes';
 import permissionsRouter from '../../interfaces/routes/permissions.routes';
+import commentRoutes from '../../interfaces/routes/usercomment.routes';
 dotenv.config();
 class Server {
     constructor() {
@@ -33,6 +35,9 @@ class Server {
         this.app.use('/api/auth', loginRoutesUser);
         this.app.use('/api/auth', registerRoutesUser);
         this.app.use('/api/permissions', permissionsRouter);
+        this.app.use('/api/userworks', userWorkRoutes);
+        this.app.use('/api/comments', commentRoutes);
+        console.log('Rutas registradas: /api/comments');
     }
     middlewares() {
         this.app.use(express.json());

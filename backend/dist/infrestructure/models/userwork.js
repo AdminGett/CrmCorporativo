@@ -9,56 +9,43 @@ const connection_1 = __importDefault(require("../../config/connection"));
 class WorkloadInstance extends sequelize_1.Model {
 }
 exports.WorkloadInstance = WorkloadInstance;
-const Workload = connection_1.default.define('workload', {
+const Workload = connection_1.default.define('Workload', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    userAssignedId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
-    },
-    adminId: {
-        type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
-    },
     title: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    descriptionTask: {
+    description: {
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: true
+    },
+    priority: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    dateDue: {
-        type: sequelize_1.DataTypes.DATE,
-        allowNull: false
-    },
-    submintedAt: {
-        type: sequelize_1.DataTypes.DATE,
-        allowNull: false
-    },
-    statusTask: {
-        type: sequelize_1.DataTypes.ENUM('pending', 'in_progress', 'completed'),
-        allowNull: false
-    },
-    priority: {
-        type: sequelize_1.DataTypes.ENUM('low', 'medium', 'high'),
-        allowNull: false
-    },
-    createdAt: {
-        type: sequelize_1.DataTypes.DATE,
+    status: {
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        defaultValue: sequelize_1.DataTypes.NOW
+        defaultValue: 'PENDING'
     },
-    updatedAt: {
+    created_by: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
+    },
+    due_date: {
         type: sequelize_1.DataTypes.DATE,
-        allowNull: false,
-        defaultValue: sequelize_1.DataTypes.NOW
+        allowNull: false
+    },
+    assigned_to: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true
     }
 }, {
-    tableName: 'workload',
+    tableName: 'workloads',
     timestamps: false
 });
 exports.default = Workload;

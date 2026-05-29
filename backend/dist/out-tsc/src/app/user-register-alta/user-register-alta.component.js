@@ -20,15 +20,25 @@ let userRegisterAltaComponent = class userRegisterAltaComponent {
         this.fechaRegistro = new Date();
         this.tipoUsuario = 0;
         this.activo = 1;
-        this.userId = 0;
         this.adminOption = 3;
         this.loading = false;
         this.showPassword = false;
     }
-    ngOnInit() {
-    }
+    ngOnInit() { }
     togglePassword() {
         this.showPassword = !this.showPassword;
+    }
+    getNombrePuesto(tipo) {
+        const puestos = {
+            1: 'Administrador',
+            2: 'Gerente',
+            3: 'Ejecutivo de ventas',
+            4: 'Marketing',
+            5: 'Servicio al cliente',
+            6: 'Analista',
+            7: 'Usuario'
+        };
+        return puestos[tipo] || 'Desconocido';
     }
     handleSubmit(event) {
         event.preventDefault();
@@ -43,19 +53,7 @@ let userRegisterAltaComponent = class userRegisterAltaComponent {
             this.toastr.error('Las contraseñas no coinciden', 'Error');
             return;
         }
-        if (this.nombre.trim() === '' ||
-            this.paterno.trim() === '' ||
-            this.materno.trim() === '' ||
-            this.fechaNacimiento === null ||
-            this.domicilio.trim() === '' ||
-            this.nss.trim() === '' ||
-            this.codigoPostal.trim() === '' ||
-            this.estado.trim() === '' ||
-            this.pais.trim() === '' ||
-            this.confirmPassword.trim() === '' ||
-            this.fechaRegistro === null ||
-            this.tipoUsuario === 0 ||
-            this.activo === 0) {
+        if (this.nombre.trim() === '' || this.paterno.trim() === '' || this.materno.trim() === '' || this.fechaNacimiento === null || this.domicilio.trim() === '' || this.nss.trim() === '' || this.codigoPostal.trim() === '' || this.estado.trim() === '' || this.pais.trim() === '' || this.confirmPassword.trim() === '' || this.fechaRegistro === null || this.tipoUsuario === 0 || this.activo === 0) {
             console.log('');
             this.toastr.error('Todos los campos son obligatorios', 'Error');
             return;
@@ -70,7 +68,7 @@ let userRegisterAltaComponent = class userRegisterAltaComponent {
         this.loading = true;
         try {
             const user = {
-                userId: this.userId, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
+                userId: 0, // Asignar un valor predeterminado o generar uno según la lógica de tu aplicación
                 passwordEncrypt: this.passwordEncrypt,
                 nombre: this.nombre,
                 paterno: this.paterno,
