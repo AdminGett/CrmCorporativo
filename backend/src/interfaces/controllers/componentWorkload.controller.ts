@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
-import componentWorkload from '../../infrestructure/models/workload';
-import { createWorkloadDTO } from '../../domain/dto/createWorkload.dto';
+
+import componentWorkload from '../../infrestructure/models/workload/workloadJess';
+
+import { createWorkloadDTO } from '../../domain/dto/workload/createWorkload.dto';
+
 
 export const getWorkloadByUser = async (
     req: Request,
@@ -11,39 +14,28 @@ export const getWorkloadByUser = async (
 
         const { userId } = req.params;
 
-        const idUsuario =
-            parseInt(userId, 10);
-
+        const idUsuario = parseInt(userId, 10);
 
         if (isNaN(idUsuario)) {
 
             res.status(400).json({
-
-                message:
-                    'El ID de usuario debe ser válido'
+                message: 'El ID de usuario debe ser válido'
             });
 
             return;
         }
-
 
         const tasks =
-            await componentWorkload.getAllByUser(
-                idUsuario
-            );
+            await componentWorkload.getAllByUser(idUsuario);
 
-
-        if (tasks.length === 0) {
+        if (!tasks || tasks.length === 0) {
 
             res.status(404).json({
-
-                message:
-                    'No se encontraron tareas'
+                message: 'No se encontraron tareas'
             });
 
             return;
         }
-
 
         res.status(200).json(tasks);
 
@@ -55,14 +47,12 @@ export const getWorkloadByUser = async (
         );
 
         res.status(500).json({
-
-            message:
-                'Error al obtener la carga de trabajo',
-
+            message: 'Error al obtener la carga de trabajo',
             error: error.message
         });
     }
 };
+
 
 
 export const filterWorkloadTasks = async (
@@ -78,7 +68,6 @@ export const filterWorkloadTasks = async (
             priority,
             search
         } = req.query;
-
 
         const tasks =
             await componentWorkload.filterTasks({
@@ -97,22 +86,18 @@ export const filterWorkloadTasks = async (
                     | 'medium'
                     | 'high',
 
-                searchQuery:
-                    search as string
+                searchQuery: search as string
             });
 
-
-        if (tasks.length === 0) {
+        if (!tasks || tasks.length === 0) {
 
             res.status(404).json({
-
                 message:
                     'No se encontraron tareas con esos filtros'
             });
 
             return;
         }
-
 
         res.status(200).json(tasks);
 
@@ -124,10 +109,7 @@ export const filterWorkloadTasks = async (
         );
 
         res.status(500).json({
-
-            message:
-                'Error al filtrar tareas',
-
+            message: 'Error al filtrar tareas',
             error: error.message
         });
     }
@@ -143,19 +125,15 @@ export const createWorkloadTask = async (
         const {
 
             userAssignedId,
-
             title,
-
             descriptionTask,
-
             dateDue,
-
             statusTask,
-
             priority
 
         }: createWorkloadDTO = req.body;
 
+        // Validar campos obligatorios
         if (
             !userAssignedId ||
             !title ||
@@ -166,16 +144,13 @@ export const createWorkloadTask = async (
         ) {
 
             res.status(400).json({
-
-                message:
-                    'Faltan campos obligatorios'
+                message: 'Faltan campos obligatorios'
             });
 
             return;
         }
 
-
-
+        // Crear nueva tarea
         const newTask =
             await componentWorkload.create({
 
@@ -185,22 +160,18 @@ export const createWorkloadTask = async (
 
                 descriptionTask,
 
-                dateDue:
-                    new Date(dateDue),
+                dateDue: new Date(dateDue),
 
                 statusTask,
 
                 priority,
 
-                submittedAt:
-                    new Date()
+                submintedAt: new Date()
             });
-
 
         res.status(201).json({
 
-            message:
-                'Tarea creada correctamente',
+            message: 'Tarea creada correctamente',
 
             data: newTask
         });
@@ -214,8 +185,7 @@ export const createWorkloadTask = async (
 
         res.status(500).json({
 
-            message:
-                'Error al crear tarea',
+            message: 'Error al crear tarea',
 
             error: error.message
         });

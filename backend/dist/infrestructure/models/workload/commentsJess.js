@@ -7,7 +7,10 @@ exports.comments = void 0;
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../../../config/connection"));
 class comments extends sequelize_1.Model {
-    static async getByUser(userId) {
+    static filterTasks(arg0) {
+        throw new Error('Method not implemented.');
+    }
+    static async getAllByUser(userId) {
         return await this.findAll({
             where: {
                 userComment: userId
@@ -59,7 +62,6 @@ comments.init({
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
         defaultValue: sequelize_1.DataTypes.NOW,
-        // nombre real MySQL
         field: 'submintedAt'
     }
 }, {

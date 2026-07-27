@@ -1,9 +1,9 @@
 import { Router } from 'express';
 // 1. Importaciones del controlador de eliminación/búsqueda (delete.controller)
-import { deleteUser, getAllUsers, getUserByName } from '../controllers/delete.controller';
-
+import { deleteUser, getAllUsers  } from '../controllers/users/delete.controller';
+import { search } from '../controllers/users/delete.controller';
 // 2. Importaciones del controlador de actualización/detalles (update.controller)
-import { updateUser, getInfoUser } from '../controllers/update.controller';
+import { updateUser, getInfoUser } from '../controllers/users/update.controller';
 
 const router: Router = Router();
 
@@ -12,7 +12,7 @@ const router: Router = Router();
 router.get('/', getAllUsers);
 
 // Buscar usuarios activos por nombre parcial (?search=Juan)
-router.get('/search', getUserByName);
+router.get('/search', search);
 
 
 // --- RUTAS DE UN USUARIO ESPECÍFICO ---

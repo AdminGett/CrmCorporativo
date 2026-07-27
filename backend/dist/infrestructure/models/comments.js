@@ -7,10 +7,7 @@ exports.comments = void 0;
 const sequelize_1 = require("sequelize");
 const connection_1 = __importDefault(require("../../config/connection"));
 class comments extends sequelize_1.Model {
-    // ======================================
-    // OBTENER POR USUARIO
-    // ======================================
-    static async getByUser(userId) {
+    static async getAllByUser(userId) {
         return await this.findAll({
             where: {
                 userComment: userId

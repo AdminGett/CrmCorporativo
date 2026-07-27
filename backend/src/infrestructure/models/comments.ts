@@ -30,11 +30,8 @@ export class comments
     public submittedAt!: Date;
 
 
-    // ======================================
-    // OBTENER POR USUARIO
-    // ======================================
 
-    public static async getByUser(
+    public static async getAllByUser(
         userId: number
     ): Promise<comments[]> {
 

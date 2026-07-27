@@ -97,7 +97,7 @@ export const getCommentsByUser = async (
 
 
         const comments =
-            await workloadComments.getByUser(
+            await workloadComments.getAllByUser(
                 idUsuario
             );
 

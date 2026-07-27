@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createWorkloadTask = exports.filterWorkloadTasks = exports.getWorkloadByUser = void 0;
-const workload_1 = __importDefault(require("../../infrestructure/models/workload"));
+const workloadJess_1 = __importDefault(require("../../infrestructure/models/workload/workloadJess"));
 const getWorkloadByUser = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -15,8 +15,8 @@ const getWorkloadByUser = async (req, res) => {
             });
             return;
         }
-        const tasks = await workload_1.default.getAllByUser(idUsuario);
-        if (tasks.length === 0) {
+        const tasks = await workloadJess_1.default.getAllByUser(idUsuario);
+        if (!tasks || tasks.length === 0) {
             res.status(404).json({
                 message: 'No se encontraron tareas'
             });
@@ -36,7 +36,7 @@ exports.getWorkloadByUser = getWorkloadByUser;
 const filterWorkloadTasks = async (req, res) => {
     try {
         const { userId, status, priority, search } = req.query;
-        const tasks = await workload_1.default.filterTasks({
+        const tasks = await workloadJess_1.default.filterTasks({
             userId: userId
                 ? parseInt(userId, 10)
                 : undefined,
@@ -44,7 +44,7 @@ const filterWorkloadTasks = async (req, res) => {
             priority: priority,
             searchQuery: search
         });
-        if (tasks.length === 0) {
+        if (!tasks || tasks.length === 0) {
             res.status(404).json({
                 message: 'No se encontraron tareas con esos filtros'
             });
@@ -64,6 +64,7 @@ exports.filterWorkloadTasks = filterWorkloadTasks;
 const createWorkloadTask = async (req, res) => {
     try {
         const { userAssignedId, title, descriptionTask, dateDue, statusTask, priority } = req.body;
+        // Validar campos obligatorios
         if (!userAssignedId ||
             !title ||
             !descriptionTask ||
@@ -75,14 +76,15 @@ const createWorkloadTask = async (req, res) => {
             });
             return;
         }
-        const newTask = await workload_1.default.create({
+        // Crear nueva tarea
+        const newTask = await workloadJess_1.default.create({
             userAssignedId,
             title,
             descriptionTask,
             dateDue: new Date(dateDue),
             statusTask,
             priority,
-            submittedAt: new Date()
+            submintedAt: new Date()
         });
         res.status(201).json({
             message: 'Tarea creada correctamente',

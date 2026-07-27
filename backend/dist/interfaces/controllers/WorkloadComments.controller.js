@@ -48,7 +48,7 @@ const getCommentsByUser = async (req, res) => {
             });
             return;
         }
-        const comments = await comments_1.default.getByUser(idUsuario);
+        const comments = await comments_1.default.getAllByUser(idUsuario);
         if (comments.length === 0) {
             res.status(404).json({
                 message: 'No se encontraron comentarios'

@@ -18,7 +18,7 @@ const verifyToken = (req, res, next) => {
         return res.status(401).json({ message: "Acceso denegado." });
     }
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY || 'pacoeltaco');
+        const decoded = jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if (!isTokenPayload(decoded)) {
             return res.status(401).json({ message: "Acceso denegado." });
         }
