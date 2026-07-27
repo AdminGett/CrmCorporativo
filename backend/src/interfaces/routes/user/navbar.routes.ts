@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { getUserName } from '../../controllers/users/navbar.controller';
 import { verifyToken } from '../../middlewares/verifyToken';
 

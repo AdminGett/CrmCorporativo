@@ -1,7 +1,7 @@
+
 import { Model, DataTypes, Optional, Op } from 'sequelize';
 import sequelize from '../../../config/connection';
 import { commentDTO } from '../../../domain/dto/workload/comment.dto';
-
 
 
 export type commentCreationAttributes =
@@ -10,14 +10,16 @@ export type commentCreationAttributes =
         'id' | 'submintedAt'
     >;
 
-
-
+    
 export class comments
     extends Model<
         commentDTO,
         commentCreationAttributes
     >
     implements commentDTO {
+    static filterTasks(arg0: { userId: number | undefined; status: "pending" | "in_progress" | "completed"; priority: "low" | "medium" | "high"; searchQuery: string; }): any[] | PromiseLike<any[]> {
+        throw new Error('Method not implemented.');
+    }
 
     public id!: number;
 
@@ -29,7 +31,8 @@ export class comments
 
     public submintedAt!: Date;
 
-    public static async getByUser(
+
+    public static async getAllByUser(
         userId: number
     ): Promise<comments[]> {
 
@@ -79,6 +82,7 @@ export class comments
     }
 }
 
+
 comments.init(
     {
         id: {
@@ -106,8 +110,6 @@ comments.init(
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
-
-            // nombre real MySQL
             field: 'submintedAt'
         }
     },
@@ -123,3 +125,4 @@ comments.init(
 );
 
 export default comments;
+

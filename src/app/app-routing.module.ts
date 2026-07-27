@@ -10,11 +10,15 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { PermissionPanelComponent } from './users/permission-panel/permission-panel.component';
 import { ErrorAccesoComponent } from './auth/error-acceso/error-acceso.component';
 import { AuthGuard } from './utilities/auth.guard';
+<<<<<<< HEAD
+import { componentWorkloadComponent } from './component-workload/component-workload.component';
+=======
 import { EditTaskComponent } from './workload/edit-task/edit-task.component';
 import { NewTaskComponent } from './workload/new-task/new-task.component';
 import { TaskViewComponent } from './workload/task-view/task-view.component';
 import { componentWorkloadComponent } from './workload/component-workload/component-workload.component';
 
+>>>>>>> origin/Student
 
 const routes: Routes = [
   {
@@ -64,6 +68,17 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+<<<<<<< HEAD
+    component:ErrorAccesoComponent,
+    path:'accessDenied'
+  },
+  {
+    path: 'workload',
+    component: componentWorkloadComponent,
+    canActivate: [AuthGuard]
+  },
+  
+=======
     component: ErrorAccesoComponent,
     path: 'accessDenied'
   },
@@ -84,6 +99,7 @@ const routes: Routes = [
     path: 'workload',
     component: componentWorkloadComponent
   }
+>>>>>>> origin/Student
 ];
 
 @NgModule({

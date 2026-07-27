@@ -10,10 +10,12 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+    "types": ["node"],
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*.ts"
   ]
 }
+

@@ -10,7 +10,11 @@ export interface workloadDTO {
 
     dateDue: Date | string;
 
+<<<<<<< HEAD
+    submittedAt?: Date | string;
+=======
     submintedAt?: Date | string;
+>>>>>>> origin/Student
 
     statusTask:
         | 'pending'
